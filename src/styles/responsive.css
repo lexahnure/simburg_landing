@@ -1,0 +1,618 @@
+/* ==========================================================================
+   Responsive Stylesheet for eSIM Management Platform (Simburg) - React App
+   ========================================================================== */
+
+/* --- Global & Overflow Protections --- */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box !important;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Header & Navigation --- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.site-header.transparent {
+  background: transparent;
+  box-shadow: none;
+}
+
+.site-header.solid-white {
+  background: #FFFFFF;
+  box-shadow: none;
+}
+
+.header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+
+.mobile-toggle-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+  color: inherit;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  background-color: currentColor;
+  border-radius: 4px;
+  transition: transform 0.25s ease, opacity 0.2s ease, background-color 0.25s ease;
+}
+
+/* Open mobile menu state */
+.site-header.menu-open .hamburger-line.line-1 {
+  transform: translateY(8.5px) rotate(45deg);
+  background-color: #0F172A !important;
+}
+
+.site-header.menu-open .hamburger-line.line-2 {
+  opacity: 0;
+}
+
+.site-header.menu-open .hamburger-line.line-3 {
+  transform: translateY(-8.5px) rotate(-45deg);
+  background-color: #0F172A !important;
+}
+
+/* Mobile Navigation Drawer */
+.mobile-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #FFFFFF;
+  border-top: 1px solid #EDEEF2;
+  border-bottom: 1px solid #EDEEF2;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.18);
+  padding: 24px 20px 32px;
+  flex-direction: column;
+  gap: 14px;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: 105;
+}
+
+.site-header.menu-open .mobile-drawer {
+  display: flex !important;
+}
+
+.mobile-drawer-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: #1D4ED8;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.mobile-drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: #14161A;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mobile-drawer-link:active, .mobile-drawer-link:hover, .mobile-drawer-link.active {
+  background: #F4F6FA;
+  color: #1C479C;
+}
+
+.mobile-drawer-link.disabled {
+  color: #94A3B8;
+  justify-content: space-between;
+  cursor: default;
+}
+
+.mobile-drawer-link.disabled:hover {
+  background: transparent;
+  color: #94A3B8;
+}
+
+.mobile-drawer-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  background: #F1F2F4;
+  padding: 2.5px 8px;
+  border-radius: 100px;
+}
+
+.mobile-drawer-divider {
+  height: 1px;
+  background: #EDEEF2;
+  margin: 6px 0;
+}
+
+.mobile-drawer-nav-link {
+  font-size: 16px;
+  font-weight: 600;
+  color: #14161A;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mobile-drawer-nav-link:active, .mobile-drawer-nav-link:hover, .mobile-drawer-nav-link.active {
+  background: #F4F6FA;
+  color: #1C479C;
+}
+
+.mobile-drawer-cta-wrap {
+  margin-top: 8px;
+}
+
+.mobile-drawer-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #003E83;
+  color: #FFFFFF !important;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 20px;
+  border-radius: 100px;
+  transition: background 0.2s ease;
+}
+
+.mobile-drawer-cta-btn:active, .mobile-drawer-cta-btn:hover {
+  background: #12305F;
+}
+
+/* --- Breakpoint: Tablet (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+  .hero-section {
+    min-height: 720px !important;
+    padding-top: 96px !important;
+  }
+
+  .hero-container {
+    align-items: flex-start !important;
+    padding-top: 16px !important;
+  }
+
+  .hero-text-wrap {
+    max-width: 520px !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .pillars-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .matrix-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px 28px !important;
+  }
+
+  .matrix-lead {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .footer-grid,
+  .footer-grid-4col,
+  .footer-grid-3col {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px !important;
+  }
+
+  .cta-banner-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .cta-banner-content {
+    padding: 40px 36px !important;
+  }
+  .cta-banner-graphic-col {
+    display: flex !important;
+  }
+
+  /* About Page Hero on Tablet */
+  .about-hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+  }
+  .about-hero-logo-wrap {
+    order: -1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-bottom: 28px !important;
+  }
+  .about-hero-logo {
+    height: clamp(56px, 7vw, 84px) !important;
+  }
+  .about-hero-text {
+    width: 100% !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+  .about-hero-grid .page-hero-title {
+    margin: 0 auto 18px !important;
+    max-width: 640px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .about-hero-grid .page-hero-desc {
+    margin: 0 auto !important;
+    max-width: 540px !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+}
+
+/* --- Breakpoint: Mobile & Small Tablet (max-width: 900px) --- */
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .desktop-cta {
+    display: none !important;
+  }
+  .mobile-toggle-btn {
+    display: flex !important;
+  }
+  .header-inner {
+    padding: 14px 20px !important;
+  }
+
+  .site-header.menu-open {
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  }
+  .site-header.menu-open .header-logo {
+    filter: none !important;
+  }
+
+  .contact-layout-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  .product-cta-grid {
+    grid-template-columns: 1fr !important;
+    padding: 16px !important;
+    border-radius: 28px !important;
+  }
+  .product-cta-info {
+    padding: 24px 16px !important;
+    text-align: center !important;
+  }
+  .product-cta-info p {
+    margin: 0 auto !important;
+  }
+  .product-cta-form {
+    padding: 28px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .product-feature-grid {
+    grid-template-columns: 1fr 1.4fr !important;
+    gap: 28px 32px !important;
+  }
+  .product-badges-col {
+    grid-column: 1 / -1 !important;
+  }
+
+  .page-hero-section {
+    padding: 130px 20px 60px !important;
+  }
+
+  .about-hero-logo-wrap {
+    margin-bottom: 24px !important;
+  }
+  .about-hero-logo {
+    height: clamp(52px, 6.5vw, 76px) !important;
+  }
+
+
+  .about-preview-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .about-preview-image {
+    order: -1;
+  }
+  .about-preview-image img {
+    width: 80% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .rnd-grid {
+    grid-template-columns: 1fr !important;
+    padding: 32px 24px !important;
+    gap: 28px !important;
+  }
+  .rnd-badge {
+    margin-left: 0 !important;
+  }
+}
+
+/* --- Breakpoint: Mobile Phones (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto !important;
+    min-height: 600px !important;
+    padding: 105px 20px 60px !important;
+  }
+  .hero-text-wrap {
+    max-width: 100% !important;
+    text-align: left;
+  }
+  .hero-title {
+    font-size: clamp(26px, 7.2vw, 38px) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 16px !important;
+  }
+  .hero-desc {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 24px !important;
+    max-width: 100% !important;
+  }
+
+  .page-hero-section {
+    padding: 110px 20px 40px !important;
+  }
+  .page-hero-title {
+    font-size: clamp(26px, 7.2vw, 36px) !important;
+    line-height: 1.15 !important;
+    margin-bottom: 14px !important;
+  }
+  .page-hero-desc {
+    font-size: 15.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .partners-bar {
+    gap: 18px !important;
+    padding: 24px 20px !important;
+    flex-direction: column !important;
+    text-align: center !important;
+  }
+  .partner-item {
+    padding-right: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid #E4E7EC;
+    padding-bottom: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .partner-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .products-section {
+    padding: 50px 16px !important;
+  }
+  .products-card-wrap {
+    padding: 12px !important;
+    border-radius: 24px !important;
+  }
+  .products-header-wrap {
+    padding: 0 8px !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
+  }
+  .products-section-title {
+    font-size: 28px !important;
+  }
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .product-item-card {
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .benefits-section {
+    padding: 60px 16px !important;
+  }
+  .benefits-section-title {
+    font-size: 28px !important;
+  }
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .benefit-card {
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .about-preview-section {
+    padding: 60px 16px !important;
+  }
+  .about-preview-text p {
+    font-size: 19px !important;
+    line-height: 1.45 !important;
+  }
+
+  .product-hero-section {
+    padding: 105px 20px 48px !important;
+  }
+  .product-hero-wrap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+  .product-feature-row {
+    padding: 44px 20px !important;
+  }
+  .product-feature-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .cta-banner-section {
+    padding: 0 16px 60px !important;
+  }
+  .cta-banner-container {
+    border-radius: 24px !important;
+    min-height: auto !important;
+  }
+  .cta-banner-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .cta-banner-spinner-wrap,
+  .cta-banner-graphic-wrap,
+  .cta-banner-graphic-col {
+    display: none !important;
+  }
+  .cta-banner-content {
+    padding: 36px 20px !important;
+    max-width: 100% !important;
+  }
+  .cta-banner-title {
+    font-size: 30px !important;
+  }
+  .cta-banner-btn {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    padding: 16px 24px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .contact-section {
+    padding: 20px 16px 60px !important;
+  }
+  .contact-form-outer {
+    padding: 16px 12px !important;
+    border-radius: 24px !important;
+  }
+  .contact-form-inner {
+    padding: 24px 16px !important;
+    border-radius: 20px !important;
+  }
+  .form-row-2col {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .pillars-section {
+    padding: 60px 16px 60px !important;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .pillar-card {
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+  }
+  .matrix-section {
+    padding: 60px 16px !important;
+  }
+  .matrix-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .site-footer {
+    padding: 44px 20px 24px !important;
+  }
+  .footer-grid,
+  .footer-grid-4col,
+  .footer-grid-3col {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+  }
+}
+
+/* --- Breakpoint: Small Mobile (max-width: 480px) --- */
+@media (max-width: 480px) {
+  .header-logo {
+    height: 38px !important;
+    width: auto !important;
+  }
+  .product-item-card,
+  .benefit-card,
+  .pillar-card {
+    padding: 20px 16px !important;
+  }
+  .rnd-grid {
+    padding: 24px 16px !important;
+    border-radius: 20px !important;
+  }
+}

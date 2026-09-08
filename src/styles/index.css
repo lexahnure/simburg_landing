@@ -1,0 +1,216 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+  color: #14161A;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: #1C479C;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #12305F;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spinRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateBorder {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes arrowSlide {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  51% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.mono-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  background: #FFFFFF;
+  color: #1C479C;
+  padding: 8px 14px;
+  border-radius: 100px;
+  border: 1px solid #EDEEF2;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.cta-banner-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #003E83;
+  color: #FFFFFF !important;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 100px;
+  min-width: 280px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.cta-banner-btn:hover {
+  background: #12305F !important;
+}
+
+/* CTA Banner 2-Column Styles */
+.cta-banner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  width: 100%;
+  min-height: 320px;
+}
+
+.cta-banner-graphic-col {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-banner-img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  pointer-events: none;
+}
+
+/* Footer Link Styles */
+.footer-link {
+  color: #8E9BAE !important;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.15s ease;
+}
+
+.footer-link:hover {
+  color: #FFFFFF !important;
+}
+
+.footer-legal-link {
+  color: #8E9BAE !important;
+  text-decoration: underline !important;
+  font-size: 13px;
+  transition: color 0.15s ease;
+}
+
+.footer-legal-link:hover {
+  color: #FFFFFF !important;
+}
+
+/* Product Page Styles */
+.product-hero-wrap {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.product-feature-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.1fr) minmax(280px, 1.5fr) minmax(180px, 1fr);
+  gap: 32px 48px;
+  align-items: flex-start;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.product-badge {
+  background: #EBF5FF;
+  color: #1E293B;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12.5px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+/* Product Cards on Homepage */
+.product-item-card {
+  text-decoration: none !important;
+  color: inherit !important;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.product-item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+  border-color: rgba(28, 71, 156, 0.25) !important;
+}
+
+.product-item-card:hover .product-item-btn {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border-color: #0F172A !important;
+}
+
+/* Product Breadcrumb Styles */
+.product-breadcrumb-link:hover {
+  color: #FFFFFF !important;
+}
+
+
+
