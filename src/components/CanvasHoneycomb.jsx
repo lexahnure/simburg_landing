@@ -364,6 +364,8 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
 
     const goldbergCells = getGoldbergCells();
 
+    let vW = 0, vH = 0;
+    let padX = 0, padY = 0;
     let width = 0, height = 0, dpr = 1;
     let sphereRotY = 0.5;
     const EARTH_ROT_SPEED = 0.085; // rad/sec
@@ -437,11 +439,21 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
     function handleResize() {
       dpr = window.devicePixelRatio || 1;
       const parent = canvas.parentElement;
-      width = parent ? parent.clientWidth : window.innerWidth;
-      height = parent ? parent.clientHeight : window.innerHeight;
+      vW = parent ? parent.clientWidth : window.innerWidth;
+      vH = parent ? parent.clientHeight : window.innerHeight;
+
+      // Generous bleed padding around viewport to eliminate any sphere/blur clipping
+      padX = Math.round(vW * 0.40);
+      padY = Math.round(vH * 0.85);
+
+      width = vW + 2 * padX;
+      height = vH + 2 * padY;
 
       canvas.width = Math.floor(width * dpr);
       canvas.height = Math.floor(height * dpr);
+      canvas.style.position = 'absolute';
+      canvas.style.top = `${-padY}px`;
+      canvas.style.left = `${-padX}px`;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
 
@@ -555,41 +567,51 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       ctx.clearRect(0, 0, width, height);
 
       const p = scrollProgress;
-      const baseRadius = Math.min(width, height) * 0.82;
+      const minDim = Math.min(vW, vH);
 
       // 3 Stages of Animation:
-      // Stage 1 -> Stage 2 (p from 0.0 to 0.35):
-      // Sphere moves from bottom (restCenterY) to center (height * 0.5),
-      // enlarges (baseRadius * 1.35), and blurs (24px).
-      // Stage 2 -> Stage 3 (p from 0.35 to 1.0):
-      // Sphere continues scrolling upwards (towards height * 0.08),
-      // remaining fully blurred while the white section scrolls up and covers hero.
+      // Stage 1 (p = 0): Sphere is large (rRest = minDim * 0.78), center is below screen (vH + 0.38 * rRest),
+      // forming the horizon arc under the Contact Us button (matching Stage 1 mockup).
+      // Stage 2 (p = 0.35): Sphere moves to screen center (vH * 0.5), scales to rCenter = minDim * 0.42,
+      // and blurs into a glowing orb behind stationary text (matching Stage 2 mockup).
+      // Stage 3 (p = 1.0): Sphere scrolls up to vH * 0.08, staying blurred, while white section
+      // scrolls up and covers hero, text scrolling when 120px from white section (matching Stage 3 mockup).
       const p1 = Math.min(1.0, p / 0.35);
       const t1 = smoothstep(0.0, 1.0, p1);
 
       const p2 = Math.max(0.0, (p - 0.35) / 0.65);
       const t2 = smoothstep(0.0, 1.0, p2);
 
-      const restCenterY = height + 0.34 * baseRadius;
-      const centerCenterY = height * 0.5;
-      const upCenterY = height * 0.08;
+      const rRest = minDim * 0.78;
+      const rCenter = minDim * 0.42;
+      const rUp = minDim * 0.44;
 
-      let sphereCenterY;
+      const restCenterY_view = vH + 0.38 * rRest;
+      const centerCenterY_view = vH * 0.50;
+      const upCenterY_view = vH * 0.08;
+
+      let currentRadius;
+      let currentCenterY_view;
+
       if (p <= 0.35) {
-        sphereCenterY = restCenterY + (centerCenterY - restCenterY) * t1;
+        currentRadius = rRest + (rCenter - rRest) * t1;
+        currentCenterY_view = restCenterY_view + (centerCenterY_view - restCenterY_view) * t1;
       } else {
-        sphereCenterY = centerCenterY + (upCenterY - centerCenterY) * t2;
+        currentRadius = rCenter + (rUp - rCenter) * t2;
+        currentCenterY_view = centerCenterY_view + (upCenterY_view - centerCenterY_view) * t2;
       }
 
-      const sphereRadius = baseRadius * (1.0 + 0.35 * t1 + 0.10 * t2);
-      const sphereCenterX = width * 0.5;
+      // Map viewport coordinates into oversized canvas coordinates
+      const sphereCenterX = padX + vW * 0.5;
+      const sphereCenterY = padY + currentCenterY_view;
+      const sphereRadius = currentRadius;
 
       const curRotX = EARTH_TILT_X;
       const curRotY = sphereRotY;
 
       // Progressive blur on the sphere as it moves to screen center, staying blurred as it scrolls up
-      const blurAmount = smoothstep(0.03, 1.0, p1) * 24;
-      if (blurAmount > 0.15) {
+      const blurAmount = smoothstep(0.04, 0.35, p) * 26;
+      if (blurAmount > 0.2) {
         canvas.style.filter = `blur(${blurAmount.toFixed(1)}px)`;
       } else {
         canvas.style.filter = 'none';
@@ -661,17 +683,6 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
           cameraZ, cameraFocal, curRotY, curRotX, 1.0
         );
       }
-
-      // Softly dissolve bottom edge of sphere into background at rest so hexagons never hit a sharp cut
-      if (p < 0.20) {
-        const fadeH = 50;
-        const bottomFade = ctx.createLinearGradient(0, height - fadeH, 0, height);
-        const fadeAlpha = 1.0 - p / 0.20;
-        bottomFade.addColorStop(0, 'rgba(69, 66, 63, 0)');
-        bottomFade.addColorStop(1, `rgba(69, 66, 63, ${fadeAlpha})`);
-        ctx.fillStyle = bottomFade;
-        ctx.fillRect(0, height - fadeH, width, fadeH);
-      }
     }
 
     function renderLoop(timestamp) {
@@ -685,15 +696,24 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       if (textRef?.current && btnRef?.current && standardsRef?.current) {
         const standardsRect = standardsRef.current.getBoundingClientRect();
         const btnRect = btnRef.current.getBoundingClientRect();
-        const untranslatedBtnBottom = btnRect.bottom - curTextTranslateY;
-        const triggerThreshold = untranslatedBtnBottom + 120;
 
-        if (standardsRect.top < triggerThreshold) {
-          curTextTranslateY = standardsRect.top - triggerThreshold;
-          textRef.current.style.transform = `translate3d(0, ${curTextTranslateY}px, 0)`;
-        } else if (curTextTranslateY !== 0) {
-          curTextTranslateY = 0;
-          textRef.current.style.transform = 'none';
+        // While white section is off-screen, hero text is strictly stationary in center
+        if (standardsRect.top >= window.innerHeight) {
+          if (curTextTranslateY !== 0) {
+            curTextTranslateY = 0;
+            textRef.current.style.transform = 'none';
+          }
+        } else {
+          const untranslatedBtnBottom = btnRect.bottom - curTextTranslateY;
+          const triggerThreshold = untranslatedBtnBottom + 120;
+
+          if (standardsRect.top < triggerThreshold) {
+            curTextTranslateY = standardsRect.top - triggerThreshold;
+            textRef.current.style.transform = `translate3d(0, ${curTextTranslateY}px, 0)`;
+          } else if (curTextTranslateY !== 0) {
+            curTextTranslateY = 0;
+            textRef.current.style.transform = 'none';
+          }
         }
       }
 
@@ -743,14 +763,9 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       id="sphere-canvas"
       style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
+        pointerEvents: 'none',
         zIndex: 1,
         display: 'block',
-        pointerEvents: 'none',
-        transformOrigin: 'center center',
       }}
     />
   );
