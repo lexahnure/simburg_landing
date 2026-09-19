@@ -216,7 +216,7 @@ button, input, select, textarea {
 .hero-scroll-track {
   position: relative;
   width: 100%;
-  height: 175vh;
+  height: 200vh;
   background-color: #45423f;
 }
 
@@ -231,6 +231,21 @@ button, input, select, textarea {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.hero-static-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #45423f;
+  background-image: radial-gradient(
+    circle at 50% 55%,
+    rgba(14, 40, 92, 0.40) 0%,
+    rgba(10, 28, 66, 0.22) 40%,
+    rgba(69, 66, 63, 0.08) 70%,
+    rgba(69, 66, 63, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Space Grotesk Bold Headings */

@@ -384,9 +384,9 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       if (!cell) return false;
       const rot = rotatePoint(cell.center, rotY, EARTH_TILT_X);
       if (isCentered) {
-        return rot[2] > 0.40 && Math.abs(rot[1]) < 0.65 && Math.abs(rot[0]) < 0.65;
+        return rot[2] > 0.38 && Math.abs(rot[1]) < 0.70 && Math.abs(rot[0]) < 0.70;
       }
-      return rot[2] > 0.28 && rot[1] >= -0.92 && rot[1] <= -0.42 && Math.abs(rot[0]) < 0.70;
+      return rot[2] > 0.32 && rot[1] >= -0.88 && rot[1] <= 0.40 && Math.abs(rot[0]) < 0.70;
     }
 
     function pickNextActiveCell(isCentered = false) {
@@ -396,10 +396,10 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       }).filter(item => {
         if (item.cell.id === activeCellId) return false;
         if (isCentered) {
-          return item.rot[2] > 0.40 && Math.abs(item.rot[1]) < 0.65 && Math.abs(item.rot[0]) < 0.65;
+          return item.rot[2] > 0.38 && Math.abs(item.rot[1]) < 0.70 && Math.abs(item.rot[0]) < 0.70;
         }
-        return item.rot[2] > 0.30 &&
-               item.rot[1] >= -0.88 && item.rot[1] <= -0.45 &&
+        return item.rot[2] > 0.32 &&
+               item.rot[1] >= -0.88 && item.rot[1] <= 0.40 &&
                Math.abs(item.rot[0]) < 0.65;
       });
 
@@ -497,36 +497,29 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       const rotRight = vNorm(vCross(rotN, rotUp));
       const rotDown = vScale(rotUp, -1);
 
-      const C_worldX = sphereCenterX + rotN[0] * sphereRadius * 1.002;
-      const C_worldY = sphereCenterY + rotN[1] * sphereRadius * 1.002;
       const C_worldZ = rotN[2] * sphereRadius * 1.002;
-
       const depthC = cameraZ - C_worldZ;
       if (depthC <= 40) return;
       const scaleC = cameraFocal / depthC;
-      const ScX = width * 0.5 + (C_worldX - width * 0.5) * scaleC;
-      const ScY = height * 0.5 + (C_worldY - height * 0.5) * scaleC;
+      const ScX = sphereCenterX + rotN[0] * sphereRadius * 1.002 * scaleC;
+      const ScY = sphereCenterY + rotN[1] * sphereRadius * 1.002 * scaleC;
 
       // Scaled step for 25% smaller hexagon (F=9)
       const step = 0.028 * sphereRadius;
 
       // Point U: local icon +X (rotRight)
-      const U_worldX = C_worldX + rotRight[0] * step;
-      const U_worldY = C_worldY + rotRight[1] * step;
       const U_worldZ = C_worldZ + rotRight[2] * step;
       const depthU = cameraZ - U_worldZ;
       const scaleU = cameraFocal / (depthU > 40 ? depthU : 40);
-      const SuX = width * 0.5 + (U_worldX - width * 0.5) * scaleU;
-      const SuY = height * 0.5 + (U_worldY - height * 0.5) * scaleU;
+      const SuX = sphereCenterX + (rotN[0] * sphereRadius * 1.002 + rotRight[0] * step) * scaleU;
+      const SuY = sphereCenterY + (rotN[1] * sphereRadius * 1.002 + rotRight[1] * step) * scaleU;
 
       // Point V: local icon +Y (rotDown)
-      const V_worldX = C_worldX + rotDown[0] * step;
-      const V_worldY = C_worldY + rotDown[1] * step;
       const V_worldZ = C_worldZ + rotDown[2] * step;
       const depthV = cameraZ - V_worldZ;
       const scaleV = cameraFocal / (depthV > 40 ? depthV : 40);
-      const SvX = width * 0.5 + (V_worldX - width * 0.5) * scaleV;
-      const SvY = height * 0.5 + (V_worldY - height * 0.5) * scaleV;
+      const SvX = sphereCenterX + (rotN[0] * sphereRadius * 1.002 + rotDown[0] * step) * scaleV;
+      const SvY = sphereCenterY + (rotN[1] * sphereRadius * 1.002 + rotDown[1] * step) * scaleV;
 
       const ICON_COORD_SIZE = 28.0;
       const a = (SuX - ScX) / ICON_COORD_SIZE;
@@ -560,45 +553,38 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       ctx.clearRect(0, 0, width, height);
 
       const p = scrollProgress;
-      const baseRadius = Math.min(width, height) * 0.82;
+      const minDim = Math.min(width, height);
 
       // Progress of centering, scaling, and blurring: smoothstep from 0.0 to 0.75
       const t = smoothstep(0.0, 0.75, p);
 
-      const restCenterY = height + 0.34 * baseRadius;
-      const targetCenterY = height * 0.5;
-      const sphereCenterY = restCenterY + (targetCenterY - restCenterY) * t;
-      const sphereCenterX = width * 0.5;
+      // Sphere radius and positioning:
+      // At rest (p = 0): sphere sits in the lower portion of the hero,
+      // bottom edge completely visible and NOT cut off (~30px above bottom edge).
+      // When centered (p -> 1): sphere moves to screen center and enlarges,
+      // fully within screen boundaries and NOT cut off on any side.
+      const rWorldRest = minDim * 0.22;
+      const rWorldCenter = minDim * 0.35;
+      const sphereRadius = rWorldRest + (rWorldCenter - rWorldRest) * t;
 
-      // Sphere enlarges gracefully (1.0x -> ~1.88x)
-      const zoom = 1.0 + 0.88 * t;
-      const sphereRadius = baseRadius * zoom;
+      const maxApparentRest = rWorldRest * 1.05;
+      const restCenterY = height - maxApparentRest - 30;
+      const centerCenterY = height * 0.5;
+
+      const sphereCenterY = restCenterY + (centerCenterY - restCenterY) * t;
+      const sphereCenterX = width * 0.5;
 
       const curRotX = EARTH_TILT_X;
       const curRotY = sphereRotY;
 
-      // Atmospheric radial gradient centered with sphere
-      const gradCenterY = (height * 0.82) + (height * 0.5 - height * 0.82) * t;
-      const atmosGrad = ctx.createRadialGradient(
-        width * 0.5, gradCenterY, width * 0.05,
-        width * 0.5, gradCenterY, width * 0.85
-      );
-      atmosGrad.addColorStop(0, 'rgba(14, 40, 92, 0.45)');
-      atmosGrad.addColorStop(0.45, 'rgba(10, 28, 66, 0.22)');
-      atmosGrad.addColorStop(0.85, 'rgba(69, 66, 63, 0.08)');
-      atmosGrad.addColorStop(1, 'rgba(69, 66, 63, 0)');
-      ctx.fillStyle = atmosGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      // Blur increases progressively as sphere moves to center
-      const blurAmount = smoothstep(0.03, 0.75, p) * 22;
+      // Progressive blur on the sphere as it moves to screen center
+      const blurAmount = smoothstep(0.04, 0.75, p) * 20;
       if (blurAmount > 0.15) {
         canvas.style.filter = `blur(${blurAmount.toFixed(1)}px)`;
-        canvas.style.transform = 'scale(1.05)';
       } else {
         canvas.style.filter = 'none';
-        canvas.style.transform = 'none';
       }
+      canvas.style.transform = 'none';
 
       // Hero text stays firmly in place (no fade, no translate)
       if (textRef?.current) {
@@ -609,7 +595,7 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       }
 
       const cameraFocal = 950;
-      const cameraZ = 1300;
+      const cameraZ = 1250;
 
       const lightDir = vNorm([0.28, -0.65, 0.72]);
       const renderList = [];
@@ -618,29 +604,23 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
         const rotCenter = rotatePoint(cell.center, curRotY, curRotX);
         if (rotCenter[2] < -0.12) continue;
 
-        const worldX = sphereCenterX + rotCenter[0] * sphereRadius;
-        const worldY = sphereCenterY + rotCenter[1] * sphereRadius;
         const worldZ = rotCenter[2] * sphereRadius;
-
         const depthZ = cameraZ - worldZ;
         if (depthZ <= 40) continue;
         const perspectiveScale = cameraFocal / depthZ;
 
-        const screenX = width * 0.5 + (worldX - width * 0.5) * perspectiveScale;
-        const screenY = height * 0.5 + (worldY - height * 0.5) * perspectiveScale;
+        const screenX = sphereCenterX + rotCenter[0] * sphereRadius * perspectiveScale;
+        const screenY = sphereCenterY + rotCenter[1] * sphereRadius * perspectiveScale;
 
         const projectedVerts = [];
         for (const v of cell.vertices) {
           const rotV = rotatePoint(v, curRotY, curRotX);
-          const vWorldX = sphereCenterX + rotV[0] * sphereRadius;
-          const vWorldY = sphereCenterY + rotV[1] * sphereRadius;
-          const vWorldZ = rotV[2] * sphereRadius;
-          const vDepthZ = cameraZ - vWorldZ;
+          const vDepthZ = cameraZ - rotV[2] * sphereRadius;
           const vScale = cameraFocal / (vDepthZ > 40 ? vDepthZ : 40);
 
           projectedVerts.push({
-            x: width * 0.5 + (vWorldX - width * 0.5) * vScale,
-            y: height * 0.5 + (vWorldY - height * 0.5) * vScale
+            x: sphereCenterX + rotV[0] * sphereRadius * vScale,
+            y: sphereCenterY + rotV[1] * sphereRadius * vScale
           });
         }
 
