@@ -442,7 +442,7 @@ img {
   }
 
   .hero-scroll-track {
-    height: 180vh !important;
+    height: 240vh !important;
     min-height: 0 !important;
     padding: 0 !important;
     background-color: #45423f !important;
@@ -642,7 +642,7 @@ img {
     padding: 105px 20px 60px !important;
   }
   .hero-scroll-track {
-    height: 160vh !important;
+    height: 230vh !important;
     min-height: 0 !important;
     padding: 0 !important;
     background-color: #45423f !important;
