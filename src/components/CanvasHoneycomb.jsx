@@ -343,7 +343,7 @@ function generateGoldbergSphere(freq = 7) {
 let cachedGoldbergCells = null;
 function getGoldbergCells() {
   if (!cachedGoldbergCells) {
-    cachedGoldbergCells = generateGoldbergSphere(7);
+    cachedGoldbergCells = generateGoldbergSphere(9);
   }
   return cachedGoldbergCells;
 }
@@ -475,7 +475,8 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       ctx.closePath();
 
       if (isActive) {
-        const rBase = 0, gBase = 110, bBase = 255;
+        // Active cell starts at #08204D (8, 32, 77) and lightens to #F8FAFC (248, 250, 252) on scroll
+        const rBase = 8, gBase = 32, bBase = 77;
         const rTarget = 248, gTarget = 250, bTarget = 252;
 
         const r = Math.round(rBase + (rTarget - rBase) * hexBrightenRatio);
@@ -486,15 +487,15 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
         ctx.fill();
 
         if (hexBrightenRatio < 0.9) {
-          const edgeAlpha = Math.max(0, (1.0 - hexBrightenRatio) * 0.8);
-          ctx.strokeStyle = `rgba(0, 240, 255, ${edgeAlpha})`;
+          const edgeAlpha = Math.max(0, (1.0 - hexBrightenRatio) * 0.85);
+          ctx.strokeStyle = `rgba(0, 229, 255, ${edgeAlpha})`;
           ctx.lineWidth = 1.8;
           ctx.stroke();
         }
       } else {
-        const baseR = 8 + dotL * 16;
-        const baseG = 24 + dotL * 38;
-        const baseB = 58 + dotL * 72;
+        const baseR = 12 + dotL * 18;
+        const baseG = 30 + dotL * 42;
+        const baseB = 68 + dotL * 80;
 
         const r = Math.round(baseR + (248 - baseR) * hexBrightenRatio * 0.7);
         const g = Math.round(baseG + (250 - baseG) * hexBrightenRatio * 0.7);
@@ -504,11 +505,11 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
         ctx.fill();
 
         if (hexBrightenRatio < 0.9) {
-          ctx.strokeStyle = `rgba(5, 16, 42, ${0.85 * (1.0 - hexBrightenRatio)})`;
+          ctx.strokeStyle = `rgba(6, 16, 38, ${0.9 * (1.0 - hexBrightenRatio)})`;
           ctx.lineWidth = 0.9;
           ctx.stroke();
 
-          ctx.strokeStyle = `rgba(64, 130, 255, ${0.12 * dotL * (1.0 - hexBrightenRatio)})`;
+          ctx.strokeStyle = `rgba(80, 150, 255, ${0.15 * dotL * (1.0 - hexBrightenRatio)})`;
           ctx.lineWidth = 0.6;
           ctx.stroke();
         }
@@ -519,8 +520,15 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       const cell = item.cell;
 
       const rotN = rotatePoint(cell.center, curRotY, curRotX);
-      const rotU = rotatePoint(cell.tangentU, curRotY, curRotX);
-      const rotV = rotatePoint(cell.tangentV, curRotY, curRotX);
+
+      // Screen-aligned tangent basis in 3D:
+      // Screen UP vector is [0, -1, 0]
+      const V_up = [0, -1, 0];
+      const dotUp = vDot(V_up, rotN);
+      const rawT_up = vSub(V_up, vScale(rotN, dotUp));
+      const rotUp = vNorm(rawT_up);
+      const rotRight = vNorm(vCross(rotN, rotUp));
+      const rotDown = vScale(rotUp, -1);
 
       const C_worldX = sphereCenterX + rotN[0] * sphereRadius * 1.002;
       const C_worldY = sphereCenterY + rotN[1] * sphereRadius * 1.002;
@@ -532,19 +540,22 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       const ScX = width * 0.5 + (C_worldX - width * 0.5) * scaleC;
       const ScY = height * 0.5 + (C_worldY - height * 0.5) * scaleC;
 
-      const step = 0.037 * sphereRadius;
+      // Scaled step for 25% smaller hexagon (F=9)
+      const step = 0.028 * sphereRadius;
 
-      const U_worldX = C_worldX + rotU[0] * step;
-      const U_worldY = C_worldY + rotU[1] * step;
-      const U_worldZ = C_worldZ + rotU[2] * step;
+      // Point U: local icon +X (rotRight)
+      const U_worldX = C_worldX + rotRight[0] * step;
+      const U_worldY = C_worldY + rotRight[1] * step;
+      const U_worldZ = C_worldZ + rotRight[2] * step;
       const depthU = cameraZ - U_worldZ;
       const scaleU = cameraFocal / (depthU > 40 ? depthU : 40);
       const SuX = width * 0.5 + (U_worldX - width * 0.5) * scaleU;
       const SuY = height * 0.5 + (U_worldY - height * 0.5) * scaleU;
 
-      const V_worldX = C_worldX + rotV[0] * step;
-      const V_worldY = C_worldY + rotV[1] * step;
-      const V_worldZ = C_worldZ + rotV[2] * step;
+      // Point V: local icon +Y (rotDown)
+      const V_worldX = C_worldX + rotDown[0] * step;
+      const V_worldY = C_worldY + rotDown[1] * step;
+      const V_worldZ = C_worldZ + rotDown[2] * step;
       const depthV = cameraZ - V_worldZ;
       const scaleV = cameraFocal / (depthV > 40 ? depthV : 40);
       const SvX = width * 0.5 + (V_worldX - width * 0.5) * scaleV;
@@ -563,7 +574,8 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       ctx.transform(a, b, c, d, e, f);
 
       const icon = ICONS[activeIconIndex];
-      const iconScale = 0.68;
+      // Scaled icon for 25% smaller hexagon
+      const iconScale = 0.52;
 
       ctx.save();
       ctx.scale(iconScale, iconScale);
@@ -580,16 +592,16 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
     function drawScene() {
       ctx.clearRect(0, 0, width, height);
 
-      // Deep Space Atmospheric Gradient
-      const spaceGrad = ctx.createRadialGradient(
-        width * 0.5, height * 0.82, width * 0.1,
+      // Atmospheric radial gradient tailored to #45423f
+      const atmosGrad = ctx.createRadialGradient(
+        width * 0.5, height * 0.82, width * 0.05,
         width * 0.5, height * 0.82, width * 0.85
       );
-      spaceGrad.addColorStop(0, 'rgba(14, 52, 126, 0.75)');
-      spaceGrad.addColorStop(0.45, 'rgba(8, 28, 72, 0.55)');
-      spaceGrad.addColorStop(0.85, 'rgba(5, 18, 44, 0.2)');
-      spaceGrad.addColorStop(1, 'rgba(3, 10, 28, 0)');
-      ctx.fillStyle = spaceGrad;
+      atmosGrad.addColorStop(0, 'rgba(14, 40, 92, 0.45)');
+      atmosGrad.addColorStop(0.45, 'rgba(10, 28, 66, 0.22)');
+      atmosGrad.addColorStop(0.85, 'rgba(69, 66, 63, 0.08)');
+      atmosGrad.addColorStop(1, 'rgba(69, 66, 63, 0)');
+      ctx.fillStyle = atmosGrad;
       ctx.fillRect(0, 0, width, height);
 
       const p = scrollProgress;

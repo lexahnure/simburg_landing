@@ -37,45 +37,68 @@ export default function HomePage() {
               height: '100%',
               position: 'relative',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               pointerEvents: 'none',
               zIndex: 10,
+              textAlign: 'center',
             }}
           >
             <div
               ref={textRef}
               className="hero-text-wrap"
               style={{
-                maxWidth: 560,
+                maxWidth: 840,
+                margin: '0 auto',
                 pointerEvents: 'auto',
                 willChange: 'opacity, transform',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
               }}
             >
               <h1
                 className="hero-title"
                 style={{
-                  fontSize: 'clamp(32px, 4.6vw, 52px)',
-                  lineHeight: 1.12,
-                  color: '#FFFFFF',
+                  fontFamily: "'Space Grotesk', sans-serif",
                   fontWeight: 700,
-                  margin: '0 0 22px',
-                  letterSpacing: '-0.025em',
+                  letterSpacing: '-0.03em',
+                  fontFeatureSettings: "'ss02' on, 'ss03' on, 'ss04' on",
+                  WebkitFontFeatureSettings: "'ss02' on, 'ss03' on, 'ss04' on",
+                  fontSize: 'clamp(34px, 4.8vw, 56px)',
+                  lineHeight: 1.1,
+                  color: '#FFFFFF',
+                  margin: '0 auto 20px',
+                  maxWidth: 840,
+                  textAlign: 'center',
                 }}
               >
-                Standards-based software infrastructure for SIM and eSIM operations
+                Independent software infrastructure for the full SIM and eSIM lifecycle
               </h1>
               <p
                 className="hero-desc"
                 style={{
-                  fontSize: 18,
+                  fontSize: 'clamp(16px, 1.8vw, 19px)',
                   lineHeight: 1.6,
                   color: '#C6D2ED',
-                  margin: '0 0 32px',
-                  maxWidth: 520,
+                  margin: '0 auto 34px',
+                  maxWidth: 680,
+                  textAlign: 'center',
                 }}
               >
-                Simburg develops independent software platforms for remote SIM provisioning, smart card operating systems, and remote lifecycle management. Engineered strictly to open international standards.
+                Remote SIM provisioning, smart card operating systems and remote lifecycle management. Runs on your infrastructure.
               </p>
+              <Link
+                to="/contact"
+                className="hero-contact-btn"
+              >
+                Contact Us
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
