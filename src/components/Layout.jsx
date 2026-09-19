@@ -4,10 +4,10 @@ import ScrollToTop from './ScrollToTop';
 
 export default function Layout({ children }) {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#FFFFFF' }}>
+    <div className="app-layout">
       <ScrollToTop />
       <Header />
-      <main style={{ flex: '1 0 auto' }}>
+      <main className="main-content">
         {children}
       </main>
       <Footer />

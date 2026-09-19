@@ -97,7 +97,7 @@ export default function Header() {
                 to="/product-sim-os"
                 className={`dropdown-item dropdown-item-split ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
               >
-                <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="dropdown-item-left">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <rect x="6" y="6" width="12" height="12" rx="2" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" />
                     <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.4" />
@@ -113,7 +113,7 @@ export default function Header() {
                 to="/product-ota"
                 className={`dropdown-item dropdown-item-split ${location.pathname === '/product-ota' ? 'active' : ''}`}
               >
-                <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="dropdown-item-left">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="16" r="1.4" fill={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} />
                     <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" strokeLinecap="round" />
@@ -187,7 +187,7 @@ export default function Header() {
               to="/product-sim-os"
               className={`mobile-drawer-link ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span className="dropdown-item-left">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <rect x="6" y="6" width="12" height="12" rx="2" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" />
                   <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.4" />
@@ -201,7 +201,7 @@ export default function Header() {
               to="/product-ota"
               className={`mobile-drawer-link ${location.pathname === '/product-ota' ? 'active' : ''}`}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span className="dropdown-item-left">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="16" r="1.4" fill={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} />
                   <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" strokeLinecap="round" />

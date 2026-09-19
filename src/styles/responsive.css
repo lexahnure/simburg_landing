@@ -876,3 +876,95 @@ img {
     border-radius: 20px !important;
   }
 }
+
+/* --- Responsive Rules for Figma Homepage Sections --- */
+@media (max-width: 1024px) {
+  .cost-box {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+    padding: 36px 28px !important;
+  }
+  .cost-cards-row {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .solutions-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+  .start-card {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    padding: 28px !important;
+  }
+  .standards-operate-container {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .standards-operate-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .engagement-container {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .engagement-left {
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    padding: 24px 20px !important;
+  }
+  .partners-logos {
+    gap: 32px !important;
+    flex-wrap: wrap !important;
+  }
+  .cost-box {
+    padding: 28px 18px !important;
+    border-radius: 20px !important;
+  }
+  .solutions-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sol-card {
+    min-height: auto !important;
+    padding: 24px 20px !important;
+  }
+  .start-diagram-panel {
+    padding: 28px 16px !important;
+    min-height: auto !important;
+  }
+  .start-meta-row {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .standards-operate-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .engagement-item {
+    padding: 20px !important;
+    gap: 16px !important;
+  }
+  .statement-section {
+    padding: 60px 20px !important;
+  }
+  .get-touch-card {
+    padding: 44px 20px !important;
+    border-radius: 20px !important;
+  }
+  .footer-grid-3col {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .footer-bottom-wrap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+}
+
