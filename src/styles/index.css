@@ -357,40 +357,59 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   position: relative;
   z-index: 20;
   margin-top: -100vh;
-  padding: 40px 24px 0;
-  background-color: #F8FAFC;
+  padding: 48px 24px 20px;
+  background-color: #FFFFFF;
 }
 
 .partners-card {
   max-width: 1240px;
   margin: 0 auto;
   background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 6px;
+  border: 1px solid #E7E5E4;
+  border-radius: 4px;
+  box-shadow: 0 5px 25px -10px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 24px 48px;
-  gap: 32px;
+  padding: 12px 40px;
+  min-height: 78px;
+  box-sizing: border-box;
+}
+
+.partners-lead-col {
+  width: 285px;
+  flex-shrink: 0;
+  border-right: 1px solid #E5E7EB;
+  padding-right: 32px;
 }
 
 .partners-lead {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: #374151;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.25;
 }
 
-.partners-logos {
+.partners-logos-col {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 56px;
+  justify-content: space-around;
+  padding-left: 32px;
+}
+
+.partner-logo-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .partner-logo-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 
 .partner-logo-img {
@@ -408,7 +427,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- The Cost of the Vendor You Already Have (Section 3) --- */
 .cost-section {
-  padding: 80px 24px;
+  position: relative;
+  z-index: 20;
+  padding: 88px 24px;
   background-color: #FFFFFF;
 }
 
@@ -417,80 +438,115 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   margin: 0 auto;
 }
 
-.cost-box {
-  background: #DCE9FA;
-  border-radius: 24px;
-  padding: 48px;
+.cost-grid {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: 400px 1fr;
   gap: 48px;
-  align-items: center;
+  align-items: start;
 }
 
 .cost-left {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 400px;
 }
 
 .cost-title {
-  font-size: clamp(28px, 3vw, 40px);
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: clamp(30px, 3.2vw, 40px);
   font-weight: 700;
   color: #000000;
   margin: 0;
   line-height: 1.15;
-  letter-spacing: -0.03em;
+  letter-spacing: -1.6px;
 }
 
 .cost-desc {
-  font-size: 17px;
-  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 27px;
   color: #374151;
   margin: 0;
 }
 
-.cost-cards-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+.cost-cards-wrap {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 0;
+}
+
+.cost-card-item {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.cost-card-item.card-1 {
+  z-index: 1;
+}
+
+.cost-card-item.card-2 {
+  margin-left: -8px;
+  z-index: 2;
+}
+
+.cost-card-item.card-3 {
+  margin-left: -8px;
+  z-index: 3;
 }
 
 .cost-card {
   background: #FFFFFF;
-  border: 1px solid #E5E7EB;
+  border: 1px solid #E7E5E4;
   border-radius: 4px 4px 0 0;
   padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 220px;
   box-sizing: border-box;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.cost-card-1 {
+  min-height: 273px;
+}
+
+.cost-card-2 {
+  min-height: 263px;
+  box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.20);
+}
+
+.cost-card-3 {
+  min-height: 253px;
+  box-shadow: 0 5px 20px -10px rgba(0, 0, 0, 0.20);
+}
+
 .cost-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
 }
 
 .cost-card-title {
-  font-size: 18px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
   font-weight: 700;
-  color: #18181B;
-  margin: 0;
+  color: #0F172A;
+  margin: 0 0 16px;
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
 .cost-card-desc {
-  font-size: 15px;
-  line-height: 1.55;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 27px;
   color: #374151;
   margin: 0;
 }
 
 /* --- Solutions for the SIM and eSIM lifecycle (Section 4) --- */
 .solutions-section {
+  position: relative;
+  z-index: 20;
   padding: 96px 24px;
   background-color: #F5F5F4;
 }
@@ -596,6 +652,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- Start from where you are (Section 5) --- */
 .start-section {
+  position: relative;
+  z-index: 20;
   padding: 96px 24px;
   background-color: #FFFFFF;
 }
@@ -755,6 +813,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- Engineered on open standards (Section 6) --- */
 .standards-operate-section {
+  position: relative;
+  z-index: 20;
   padding: 96px 24px;
   background-color: #F5F5F4;
 }
@@ -824,6 +884,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- How an engagement starts (Section 7) --- */
 .engagement-section {
+  position: relative;
+  z-index: 20;
   padding: 96px 24px;
   background-color: #FFFFFF;
 }
@@ -917,7 +979,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- Statement Section (Section 8) --- */
 .statement-section {
-  padding: 100px 24px;
+  position: relative;
+  z-index: 20;
+  padding: 140px 24px;
   background-color: #FFFFFF;
 }
 
@@ -927,23 +991,33 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .statement-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: clamp(24px, 2.5vw, 36px);
   font-weight: 500;
   line-height: 1.45;
   letter-spacing: -0.02em;
 }
 
-.statement-dark {
-  color: #08204D;
-  font-weight: 600;
+.statement-word-track {
+  display: inline;
+  margin: 0;
+  line-height: 1.45;
 }
 
-.statement-muted {
-  color: #64748B;
+.statement-word {
+  color: #8E9BAE;
+  transition: color 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline;
+}
+
+.statement-word.active {
+  color: #08204D;
 }
 
 /* --- Get in Touch (Section 9) --- */
 .get-touch-section {
+  position: relative;
+  z-index: 20;
   padding: 40px 24px 100px;
   background-color: #FFFFFF;
 }
@@ -1003,6 +1077,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 /* --- Footer (Section 10) --- */
 .site-footer {
+  position: relative;
+  z-index: 20;
   background: #0F172A;
   color: #8E9BAE;
   padding: 64px 24px 36px;

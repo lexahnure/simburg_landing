@@ -879,14 +879,30 @@ img {
 
 /* --- Responsive Rules for Figma Homepage Sections --- */
 @media (max-width: 1024px) {
-  .cost-box {
+  .cost-grid {
     grid-template-columns: 1fr !important;
     gap: 36px !important;
-    padding: 36px 28px !important;
   }
-  .cost-cards-row {
-    grid-template-columns: 1fr !important;
+  .cost-left {
+    max-width: 100% !important;
+  }
+  .cost-cards-wrap {
+    flex-direction: column !important;
     gap: 16px !important;
+  }
+  .cost-card-item.card-2,
+  .cost-card-item.card-3 {
+    margin-left: 0 !important;
+  }
+  .cost-card,
+  .cost-card-1,
+  .cost-card-2,
+  .cost-card-3 {
+    min-height: auto !important;
+    border-radius: 4px !important;
+  }
+  .statement-section {
+    padding: 80px 20px !important;
   }
   .solutions-grid {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -916,17 +932,23 @@ img {
 @media (max-width: 768px) {
   .partners-card {
     flex-direction: column !important;
-    align-items: flex-start !important;
+    align-items: center !important;
+    text-align: center !important;
     gap: 20px !important;
     padding: 24px 20px !important;
   }
-  .partners-logos {
-    gap: 32px !important;
-    flex-wrap: wrap !important;
+  .partners-lead-col {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #E5E7EB !important;
+    padding-right: 0 !important;
+    padding-bottom: 16px !important;
+    text-align: center !important;
   }
-  .cost-box {
-    padding: 28px 18px !important;
-    border-radius: 20px !important;
+  .partners-logos-col {
+    width: 100% !important;
+    padding-left: 0 !important;
+    gap: 32px !important;
   }
   .solutions-grid {
     grid-template-columns: 1fr !important;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BookOpenText, ScanSearch, FlaskConical, Rocket } from 'lucide-react';
 import CanvasHoneycomb from '../components/CanvasHoneycomb';
 import ScrollReveal from '../components/ScrollReveal';
+import ScrollWordReveal from '../components/ScrollWordReveal';
 
 const START_TABS = [
   'MVNO',
@@ -103,34 +104,40 @@ export default function HomePage() {
       >
         <ScrollReveal>
           <div className="partners-card">
-            <p className="partners-lead">
-              Delivered with leading technology partners
-            </p>
-            <div className="partners-logos">
-              <a
-                href="https://www.samsung.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="partner-logo-link"
-              >
-                <img
-                  src="/uploads/samsung.svg"
-                  alt="Samsung"
-                  className="partner-logo-img"
-                />
-              </a>
-              <a
-                href="https://www.infineon.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="partner-logo-link"
-              >
-                <img
-                  src="/uploads/infineon.svg"
-                  alt="Infineon"
-                  className="partner-logo-img"
-                />
-              </a>
+            <div className="partners-lead-col">
+              <p className="partners-lead">
+                Delivered with leading technology partners
+              </p>
+            </div>
+            <div className="partners-logos-col">
+              <div className="partner-logo-item">
+                <a
+                  href="https://www.samsung.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-logo-link"
+                >
+                  <img
+                    src="/uploads/samsung.svg"
+                    alt="Samsung"
+                    className="partner-logo-img"
+                  />
+                </a>
+              </div>
+              <div className="partner-logo-item">
+                <a
+                  href="https://www.infineon.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-logo-link"
+                >
+                  <img
+                    src="/uploads/infineon.svg"
+                    alt="Infineon"
+                    className="partner-logo-img"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </ScrollReveal>
@@ -140,7 +147,7 @@ export default function HomePage() {
       <section className="cost-section">
         <div className="cost-container">
           <ScrollReveal>
-            <div className="cost-box">
+            <div className="cost-grid">
               <div className="cost-left">
                 <h2 className="cost-title">
                   The cost of the vendor you already have
@@ -150,32 +157,38 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="cost-cards-row">
-                <div className="cost-card">
-                  <h3 className="cost-card-title">
-                    Pricing that scales against you
-                  </h3>
-                  <p className="cost-card-desc">
-                    Every new subscriber adds a line to someone else's invoice
-                  </p>
+              <div className="cost-cards-wrap">
+                <div className="cost-card-item card-1">
+                  <div className="cost-card cost-card-1">
+                    <h3 className="cost-card-title">
+                      Pricing that scales against you
+                    </h3>
+                    <p className="cost-card-desc">
+                      Every new subscriber adds a line to someone else's invoice
+                    </p>
+                  </div>
                 </div>
 
-                <div className="cost-card">
-                  <h3 className="cost-card-title">
-                    Formats you do not control
-                  </h3>
-                  <p className="cost-card-desc">
-                    Proprietary profiles turn a vendor change into a migration project
-                  </p>
+                <div className="cost-card-item card-2">
+                  <div className="cost-card cost-card-2">
+                    <h3 className="cost-card-title">
+                      Formats you do not control
+                    </h3>
+                    <p className="cost-card-desc">
+                      Proprietary profiles turn a vendor change into a migration project
+                    </p>
+                  </div>
                 </div>
 
-                <div className="cost-card">
-                  <h3 className="cost-card-title">
-                    Roadmap you do not set
-                  </h3>
-                  <p className="cost-card-desc">
-                    New applets and market features wait for their release cycle
-                  </p>
+                <div className="cost-card-item card-3">
+                  <div className="cost-card cost-card-3">
+                    <h3 className="cost-card-title">
+                      Roadmap you do not set
+                    </h3>
+                    <p className="cost-card-desc">
+                      New applets and market features wait for their release cycle
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -500,14 +513,9 @@ export default function HomePage() {
       {/* 8. Statement / Manifesto */}
       <section className="statement-section">
         <div className="statement-container">
-          <ScrollReveal>
-            <div className="statement-text">
-              <span className="statement-dark">We develop standalone</span>{' '}
-              <span className="statement-muted">
-                software components for telecommunications and secure digital identity. Network operators, IoT providers and card manufacturers use them to deploy specialised services without building from scratch.
-              </span>
-            </div>
-          </ScrollReveal>
+          <div className="statement-text">
+            <ScrollWordReveal text="We develop standalone software components for telecommunications and secure digital identity. Network operators, IoT providers and card manufacturers use them to deploy specialised services without building from scratch." />
+          </div>
         </div>
       </section>
 
