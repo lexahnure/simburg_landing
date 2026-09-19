@@ -353,7 +353,7 @@ function smoothstep(min, max, value) {
   return x * x * (3 - 2 * x);
 }
 
-export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
+export default function CanvasHoneycomb({ trackRef, textRef }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -377,60 +377,43 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
     let cellSwitchTimer = 0;
     const CELL_CYCLE_DURATION = 3.2;
 
-    let centralTargetCellId = -1;
     let rafId = null;
     let lastTime = 0;
 
-    function isCellInUpperThird(cell, rotY) {
+    function isCellEligible(cell, rotY, isCentered) {
       if (!cell) return false;
       const rot = rotatePoint(cell.center, rotY, EARTH_TILT_X);
+      if (isCentered) {
+        return rot[2] > 0.40 && Math.abs(rot[1]) < 0.65 && Math.abs(rot[0]) < 0.65;
+      }
       return rot[2] > 0.28 && rot[1] >= -0.92 && rot[1] <= -0.42 && Math.abs(rot[0]) < 0.70;
     }
 
-    function pickNextActiveCellInUpperThird() {
+    function pickNextActiveCell(isCentered = false) {
       const candidates = goldbergCells.map(cell => {
         const rot = rotatePoint(cell.center, sphereRotY, EARTH_TILT_X);
         return { cell, rot };
       }).filter(item => {
+        if (item.cell.id === activeCellId) return false;
+        if (isCentered) {
+          return item.rot[2] > 0.40 && Math.abs(item.rot[1]) < 0.65 && Math.abs(item.rot[0]) < 0.65;
+        }
         return item.rot[2] > 0.30 &&
                item.rot[1] >= -0.88 && item.rot[1] <= -0.45 &&
-               Math.abs(item.rot[0]) < 0.65 &&
-               item.cell.id !== activeCellId;
+               Math.abs(item.rot[0]) < 0.65;
       });
 
       if (candidates.length > 0) {
-        candidates.sort((a, b) => {
-          const distA = Math.hypot(a.rot[0], a.rot[1] - (-0.66), a.rot[2] - 0.75);
-          const distB = Math.hypot(b.rot[0], b.rot[1] - (-0.66), b.rot[2] - 0.75);
-          return distA - distB;
-        });
-
-        const pick = candidates[Math.floor(Math.random() * Math.min(3, candidates.length))];
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
         activeCellId = pick.cell.id;
         activeIconIndex = (activeIconIndex + 1) % ICONS.length;
         pick.cell.iconIndex = activeIconIndex;
       } else {
-        const anyValid = goldbergCells.find(c => isCellInUpperThird(c, sphereRotY));
+        const anyValid = goldbergCells.find(c => isCellEligible(c, sphereRotY, isCentered));
         if (anyValid) {
           activeCellId = anyValid.id;
         }
       }
-    }
-
-    function getVisibleCenterCell() {
-      let bestCell = goldbergCells[0];
-      let bestDist = Infinity;
-
-      for (const cell of goldbergCells) {
-        const rot = rotatePoint(cell.center, sphereRotY, EARTH_TILT_X);
-        if (rot[2] <= 0.3) continue;
-        const dist = Math.hypot(rot[0] - 0, rot[1] - (-0.65), rot[2] - 0.75);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestCell = cell;
-        }
-      }
-      return bestCell;
     }
 
     function onScroll() {
@@ -463,7 +446,7 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       onScroll();
     }
 
-    function drawCell(item, hexBrightenRatio) {
+    function drawCell(item) {
       const { projectedVerts, dotL, isActive } = item;
       if (projectedVerts.length < 3) return;
 
@@ -475,44 +458,28 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       ctx.closePath();
 
       if (isActive) {
-        // Active cell starts at #08204D (8, 32, 77) and lightens to #F8FAFC (248, 250, 252) on scroll
-        const rBase = 8, gBase = 32, bBase = 77;
-        const rTarget = 248, gTarget = 250, bTarget = 252;
-
-        const r = Math.round(rBase + (rTarget - rBase) * hexBrightenRatio);
-        const g = Math.round(gBase + (gTarget - gBase) * hexBrightenRatio);
-        const b = Math.round(bBase + (bTarget - bBase) * hexBrightenRatio);
-
-        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        // Active cell with icon is #08204D with cyan accent border
+        ctx.fillStyle = '#08204D';
         ctx.fill();
 
-        if (hexBrightenRatio < 0.9) {
-          const edgeAlpha = Math.max(0, (1.0 - hexBrightenRatio) * 0.85);
-          ctx.strokeStyle = `rgba(0, 229, 255, ${edgeAlpha})`;
-          ctx.lineWidth = 1.8;
-          ctx.stroke();
-        }
+        ctx.strokeStyle = 'rgba(0, 229, 255, 0.85)';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
       } else {
         const baseR = 12 + dotL * 18;
         const baseG = 30 + dotL * 42;
         const baseB = 68 + dotL * 80;
 
-        const r = Math.round(baseR + (248 - baseR) * hexBrightenRatio * 0.7);
-        const g = Math.round(baseG + (250 - baseG) * hexBrightenRatio * 0.7);
-        const b = Math.round(baseB + (252 - baseB) * hexBrightenRatio * 0.7);
-
-        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        ctx.fillStyle = `rgb(${Math.round(baseR)}, ${Math.round(baseG)}, ${Math.round(baseB)})`;
         ctx.fill();
 
-        if (hexBrightenRatio < 0.9) {
-          ctx.strokeStyle = `rgba(6, 16, 38, ${0.9 * (1.0 - hexBrightenRatio)})`;
-          ctx.lineWidth = 0.9;
-          ctx.stroke();
+        ctx.strokeStyle = 'rgba(6, 16, 38, 0.9)';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
 
-          ctx.strokeStyle = `rgba(80, 150, 255, ${0.15 * dotL * (1.0 - hexBrightenRatio)})`;
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
+        ctx.strokeStyle = `rgba(80, 150, 255, ${0.15 * dotL})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
       }
     }
 
@@ -592,10 +559,29 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
     function drawScene() {
       ctx.clearRect(0, 0, width, height);
 
-      // Atmospheric radial gradient tailored to #45423f
+      const p = scrollProgress;
+      const baseRadius = Math.min(width, height) * 0.82;
+
+      // Progress of centering, scaling, and blurring: smoothstep from 0.0 to 0.75
+      const t = smoothstep(0.0, 0.75, p);
+
+      const restCenterY = height + 0.34 * baseRadius;
+      const targetCenterY = height * 0.5;
+      const sphereCenterY = restCenterY + (targetCenterY - restCenterY) * t;
+      const sphereCenterX = width * 0.5;
+
+      // Sphere enlarges gracefully (1.0x -> ~1.88x)
+      const zoom = 1.0 + 0.88 * t;
+      const sphereRadius = baseRadius * zoom;
+
+      const curRotX = EARTH_TILT_X;
+      const curRotY = sphereRotY;
+
+      // Atmospheric radial gradient centered with sphere
+      const gradCenterY = (height * 0.82) + (height * 0.5 - height * 0.82) * t;
       const atmosGrad = ctx.createRadialGradient(
-        width * 0.5, height * 0.82, width * 0.05,
-        width * 0.5, height * 0.82, width * 0.85
+        width * 0.5, gradCenterY, width * 0.05,
+        width * 0.5, gradCenterY, width * 0.85
       );
       atmosGrad.addColorStop(0, 'rgba(14, 40, 92, 0.45)');
       atmosGrad.addColorStop(0.45, 'rgba(10, 28, 66, 0.22)');
@@ -604,73 +590,26 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       ctx.fillStyle = atmosGrad;
       ctx.fillRect(0, 0, width, height);
 
-      const p = scrollProgress;
-      const baseRadius = Math.min(width, height) * 0.82;
-      let zoom = 1.0;
-      let sphereCenterX = width * 0.5;
-      let sphereCenterY = 0;
-      let whiteoutAlpha = 0;
-      let hexBrightenRatio = 0;
-
-      const restCenterY = height + 0.34 * baseRadius;
-      const visible60CenterY = height - 0.20 * baseRadius;
-
-      const curRotX = EARTH_TILT_X;
-      const curRotY = sphereRotY;
-
-      if (p <= 0.25) {
-        const t1 = smoothstep(0.0, 0.25, p);
-        zoom = 1.0;
-        sphereCenterY = restCenterY + (visible60CenterY - restCenterY) * t1;
-        hexBrightenRatio = 0;
-        whiteoutAlpha = 0;
-      } else if (p <= 0.68) {
-        const t2 = smoothstep(0.25, 0.68, p);
-        zoom = 1.0 + (30.0 - 1.0) * Math.pow(t2, 2.0);
-        hexBrightenRatio = t2;
-
-        const curRadius = baseRadius * zoom;
-        const targetCell = goldbergCells[centralTargetCellId !== -1 ? centralTargetCellId : activeCellId];
-        const targetRot = rotatePoint(targetCell.center, curRotY, curRotX);
-
-        const desiredCenterX = width * 0.5 - targetRot[0] * curRadius;
-        const desiredCenterY = height * 0.5 - targetRot[1] * curRadius;
-
-        sphereCenterX = width * 0.5 + (desiredCenterX - width * 0.5) * t2;
-        sphereCenterY = visible60CenterY + (desiredCenterY - visible60CenterY) * t2;
-
-        whiteoutAlpha = smoothstep(0.50, 0.68, p) * 0.6;
+      // Blur increases progressively as sphere moves to center
+      const blurAmount = smoothstep(0.03, 0.75, p) * 22;
+      if (blurAmount > 0.15) {
+        canvas.style.filter = `blur(${blurAmount.toFixed(1)}px)`;
+        canvas.style.transform = 'scale(1.05)';
       } else {
-        const t3 = smoothstep(0.68, 0.80, p);
-        zoom = 30.0 + t3 * 6.0;
-        const curRadius = baseRadius * zoom;
-        const targetCell = goldbergCells[centralTargetCellId !== -1 ? centralTargetCellId : activeCellId];
-        const targetRot = rotatePoint(targetCell.center, curRotY, curRotX);
-
-        sphereCenterX = width * 0.5 - targetRot[0] * curRadius;
-        sphereCenterY = height * 0.5 - targetRot[1] * curRadius;
-
-        hexBrightenRatio = 1.0;
-        whiteoutAlpha = 0.6 + t3 * 0.4;
+        canvas.style.filter = 'none';
+        canvas.style.transform = 'none';
       }
 
-      const sphereRadius = baseRadius * zoom;
+      // Hero text stays firmly in place (no fade, no translate)
+      if (textRef?.current) {
+        textRef.current.style.opacity = '1';
+        textRef.current.style.transform = 'none';
+        textRef.current.style.pointerEvents = 'auto';
+        textRef.current.style.visibility = 'visible';
+      }
+
       const cameraFocal = 950;
       const cameraZ = 1300;
-
-      // Update external whiteout overlay if ref provided
-      if (overlayRef?.current) {
-        overlayRef.current.style.opacity = whiteoutAlpha.toFixed(3);
-      }
-
-      // Update hero text visibility & subtle parallax fade
-      if (textRef?.current) {
-        const textOpacity = Math.max(0, 1.0 - p * 4.5);
-        textRef.current.style.opacity = textOpacity.toFixed(3);
-        textRef.current.style.transform = `translateY(-${(p * 60).toFixed(1)}px)`;
-        textRef.current.style.pointerEvents = textOpacity > 0.05 ? 'auto' : 'none';
-        textRef.current.style.visibility = textOpacity <= 0 ? 'hidden' : 'visible';
-      }
 
       const lightDir = vNorm([0.28, -0.65, 0.72]);
       const renderList = [];
@@ -723,18 +662,15 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       renderList.sort((a, b) => a.worldZ - b.worldZ);
 
       for (const item of renderList) {
-        drawCell(item, hexBrightenRatio);
+        drawCell(item);
       }
 
       const activeItem = renderList.find(i => i.isActive);
-      if (activeItem && p < 0.65) {
-        const fadeOut = Math.max(0, 1.0 - smoothstep(0.28, 0.62, p));
-        if (fadeOut > 0.01) {
-          drawSurfaceMappedActiveCell(
-            activeItem, sphereCenterX, sphereCenterY, sphereRadius,
-            cameraZ, cameraFocal, curRotY, curRotX, fadeOut
-          );
-        }
+      if (activeItem) {
+        drawSurfaceMappedActiveCell(
+          activeItem, sphereCenterX, sphereCenterY, sphereRadius,
+          cameraZ, cameraFocal, curRotY, curRotX, 1.0
+        );
       }
     }
 
@@ -744,29 +680,19 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       lastTime = timestamp;
 
       scrollProgress += (targetScrollProgress - scrollProgress) * 0.18;
-      const isScrolled = scrollProgress > 0.003;
 
-      if (!isScrolled) {
-        sphereRotY += EARTH_ROT_SPEED * dt;
+      sphereRotY += EARTH_ROT_SPEED * dt;
 
-        const curActive = goldbergCells[activeCellId];
-        if (!isCellInUpperThird(curActive, sphereRotY)) {
-          pickNextActiveCellInUpperThird();
-          cellSwitchTimer = 0;
-        } else {
-          cellSwitchTimer += dt;
-          if (cellSwitchTimer >= CELL_CYCLE_DURATION) {
-            cellSwitchTimer = 0;
-            pickNextActiveCellInUpperThird();
-          }
-        }
-        centralTargetCellId = -1;
+      const isCentered = scrollProgress > 0.25;
+      const curActive = goldbergCells[activeCellId];
+      if (!isCellEligible(curActive, sphereRotY, isCentered)) {
+        pickNextActiveCell(isCentered);
+        cellSwitchTimer = 0;
       } else {
-        if (centralTargetCellId === -1) {
-          const centerCell = getVisibleCenterCell();
-          centralTargetCellId = centerCell.id;
-          activeCellId = centerCell.id;
-          activeIconIndex = centerCell.iconIndex;
+        cellSwitchTimer += dt;
+        if (cellSwitchTimer >= CELL_CYCLE_DURATION) {
+          cellSwitchTimer = 0;
+          pickNextActiveCell(isCentered);
         }
       }
 
@@ -781,7 +707,7 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
     handleResize();
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', onScroll, { passive: true });
-    pickNextActiveCellInUpperThird();
+    pickNextActiveCell(false);
 
     rafId = requestAnimationFrame(renderLoop);
 
@@ -790,7 +716,7 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', onScroll);
     };
-  }, [trackRef, overlayRef, textRef]);
+  }, [trackRef, textRef]);
 
   return (
     <canvas
@@ -805,6 +731,7 @@ export default function CanvasHoneycomb({ trackRef, overlayRef, textRef }) {
         zIndex: 1,
         display: 'block',
         pointerEvents: 'none',
+        transformOrigin: 'center center',
       }}
     />
   );

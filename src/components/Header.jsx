@@ -27,115 +27,52 @@ export default function Header() {
 
   const isAbout = location.pathname === '/about' || location.pathname === '/about.html' || location.pathname === '/about.dc.html';
   const isDarkHero = isHome && !scrolled && !menuOpen;
+  const isTransparent = isAbout && !scrolled && !menuOpen;
 
-  const headerStyle = menuOpen
-    ? { background: '#FFFFFF', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }
-    : scrolled
-    ? { background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(14px)', boxShadow: '0 1px 0 rgba(0,0,0,0.06)' }
-    : isHome || isAbout
-    ? { background: 'transparent', boxShadow: 'none' }
-    : { background: '#FFFFFF', boxShadow: 'none' };
-
-  const textColor = isDarkHero ? '#FFFFFF' : '#14161A';
-  const logoFilter = isDarkHero ? 'brightness(0) invert(1)' : 'none';
-  const ctaBg = isDarkHero ? '#FFFFFF' : '#003E83';
-  const ctaColor = isDarkHero ? '#003E83' : '#FFFFFF';
+  const headerClassNames = [
+    'site-header',
+    scrolled ? 'scrolled' : '',
+    menuOpen ? 'menu-open' : '',
+    isDarkHero ? 'dark-hero' : '',
+    isTransparent ? 'transparent-header' : '',
+  ].filter(Boolean).join(' ');
 
   return (
-    <header
-      className={`site-header ${menuOpen ? 'menu-open' : ''} ${scrolled ? 'scrolled' : ''}`}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        transition: 'background 0.3s ease, box-shadow 0.3s ease',
-        ...headerStyle,
-      }}
-    >
+    <header className={headerClassNames}>
       <div className="header-inner">
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <Link to="/" className="header-logo-link">
           <img
             src="/uploads/logo_simburg.svg"
             alt="Simburg"
             className="header-logo"
-            style={{
-              height: 48,
-              width: 154,
-              display: 'block',
-              filter: logoFilter,
-              transition: 'filter 0.3s ease',
-            }}
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+        <nav className="desktop-nav">
           {/* Products Dropdown */}
           <div
-            style={{ position: 'relative', padding: '10px 0' }}
+            className="nav-dropdown-wrapper"
             onMouseEnter={() => setProductsOpen(true)}
             onMouseLeave={() => setProductsOpen(false)}
           >
-            <span
-              style={{
-                color: textColor,
-                fontSize: 15,
-                fontWeight: 500,
-                cursor: 'default',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-                transition: 'color 0.3s ease',
-              }}
-            >
+            <span className="nav-dropdown-trigger">
               Products
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M6 9l6 6 6-6"
-                  stroke={textColor}
+                  stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  style={{ transition: 'stroke 0.3s ease' }}
                 />
               </svg>
             </span>
 
-            <div
-              style={{
-                opacity: productsOpen ? 1 : 0,
-                visibility: productsOpen ? 'visible' : 'hidden',
-                transform: productsOpen ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(-6px)',
-                position: 'absolute',
-                top: '100%',
-                left: '50%',
-                background: '#FFFFFF',
-                border: '1px solid #EDEEF2',
-                borderRadius: 16,
-                boxShadow: '0 12px 30px -10px rgba(20,22,26,0.12)',
-                padding: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                minWidth: 270,
-                transition: 'opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease',
-              }}
-            >
+            <div className={`nav-dropdown-menu ${productsOpen ? 'open' : ''}`}>
               <Link
                 to="/product-rsp"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  color: location.pathname === '/product-rsp' ? '#1C479C' : '#14161A',
-                  textDecoration: 'none',
-                  fontSize: 14.5,
-                  fontWeight: location.pathname === '/product-rsp' ? 600 : 500,
-                  padding: '11px 12px',
-                  borderRadius: 12,
-                  background: location.pathname === '/product-rsp' ? '#F5F5F7' : 'transparent',
-                }}
+                className={`dropdown-item ${location.pathname === '/product-rsp' ? 'active' : ''}`}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M7 3h7l4 4v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="#1C479C" strokeWidth="1.6" strokeLinejoin="round" />
@@ -146,18 +83,7 @@ export default function Header() {
 
               <Link
                 to="/product-edoc"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                  color: location.pathname === '/product-edoc' ? '#1C479C' : '#14161A',
-                  textDecoration: 'none',
-                  fontSize: 14.5,
-                  fontWeight: location.pathname === '/product-edoc' ? 600 : 500,
-                  padding: '11px 12px',
-                  borderRadius: 12,
-                  background: location.pathname === '/product-edoc' ? '#F5F5F7' : 'transparent',
-                }}
+                className={`dropdown-item ${location.pathname === '/product-edoc' ? 'active' : ''}`}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <rect x="3" y="5" width="18" height="14" rx="2" stroke="#1C479C" strokeWidth="1.6" />
@@ -169,19 +95,7 @@ export default function Header() {
 
               <Link
                 to="/product-sim-os"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 10,
-                  color: location.pathname === '/product-sim-os' ? '#1C479C' : '#14161A',
-                  textDecoration: 'none',
-                  fontSize: 14.5,
-                  fontWeight: location.pathname === '/product-sim-os' ? 600 : 500,
-                  padding: '11px 12px',
-                  borderRadius: 12,
-                  background: location.pathname === '/product-sim-os' ? '#F5F5F7' : 'transparent',
-                }}
+                className={`dropdown-item dropdown-item-split ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
               >
                 <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -190,26 +104,14 @@ export default function Header() {
                   </svg>
                   SIM/eSIM OS
                 </span>
-                <span style={{ fontSize: 11, fontWeight: 600, color: '#98A2B3', background: '#F1F2F4', padding: '3px 8px', borderRadius: 100, whiteSpace: 'nowrap' }}>
+                <span className="dropdown-item-badge">
                   Coming Soon
                 </span>
               </Link>
 
               <Link
                 to="/product-ota"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 10,
-                  color: location.pathname === '/product-ota' ? '#1C479C' : '#14161A',
-                  textDecoration: 'none',
-                  fontSize: 14.5,
-                  fontWeight: location.pathname === '/product-ota' ? 600 : 500,
-                  padding: '11px 12px',
-                  borderRadius: 12,
-                  background: location.pathname === '/product-ota' ? '#F5F5F7' : 'transparent',
-                }}
+                className={`dropdown-item dropdown-item-split ${location.pathname === '/product-ota' ? 'active' : ''}`}
               >
                 <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -218,7 +120,7 @@ export default function Header() {
                   </svg>
                   OTA Platform
                 </span>
-                <span style={{ fontSize: 11, fontWeight: 600, color: '#98A2B3', background: '#F1F2F4', padding: '3px 8px', borderRadius: 100, whiteSpace: 'nowrap' }}>
+                <span className="dropdown-item-badge">
                   Coming Soon
                 </span>
               </Link>
@@ -227,34 +129,17 @@ export default function Header() {
 
           <Link
             to="/about"
-            style={{
-              color: location.pathname === '/about' ? '#1C479C' : textColor,
-              textDecoration: 'none',
-              fontSize: 15,
-              fontWeight: location.pathname === '/about' ? 600 : 500,
-              transition: 'color 0.3s ease',
-            }}
+            className={`nav-item-link ${location.pathname === '/about' ? 'active' : ''}`}
           >
             About Us
           </Link>
         </nav>
 
         {/* Desktop CTA */}
-        <div className="desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 22, flexShrink: 0 }}>
+        <div className="desktop-cta">
           <Link
             to="/contact"
-            style={{
-              background: ctaBg,
-              color: ctaColor,
-              textDecoration: 'none',
-              fontSize: 14.5,
-              fontWeight: 600,
-              padding: '11px 22px',
-              borderRadius: 100,
-              whiteSpace: 'nowrap',
-              transition: 'background 0.3s ease, color 0.3s ease',
-              boxShadow: isDarkHero ? '0 4px 12px rgba(0,0,0,0.1)' : 'none',
-            }}
+            className="header-cta-btn"
           >
             Contact Us
           </Link>
@@ -265,7 +150,6 @@ export default function Header() {
           className="mobile-toggle-btn"
           aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           onClick={() => setMenuOpen(!menuOpen)}
-          style={{ color: textColor }}
         >
           <span className="hamburger-line line-1" />
           <span className="hamburger-line line-2" />

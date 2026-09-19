@@ -6,7 +6,6 @@ import TeamCtaBanner from '../components/TeamCtaBanner';
 
 export default function HomePage() {
   const trackRef = useRef(null);
-  const overlayRef = useRef(null);
   const textRef = useRef(null);
 
   return (
@@ -20,12 +19,7 @@ export default function HomePage() {
         <div className="hero-sticky-viewport">
           <CanvasHoneycomb
             trackRef={trackRef}
-            overlayRef={overlayRef}
             textRef={textRef}
-          />
-          <div
-            ref={overlayRef}
-            className="hero-whiteout-overlay"
           />
           <div
             className="hero-container"
@@ -52,7 +46,6 @@ export default function HomePage() {
                 maxWidth: 840,
                 margin: '0 auto',
                 pointerEvents: 'auto',
-                willChange: 'opacity, transform',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
