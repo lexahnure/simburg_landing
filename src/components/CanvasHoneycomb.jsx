@@ -553,22 +553,17 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
       ctx.clearRect(0, 0, width, height);
 
       const p = scrollProgress;
-      const minDim = Math.min(width, height);
+      const baseRadius = Math.min(width, height) * 0.82;
 
       // Progress of centering, scaling, and blurring: smoothstep from 0.0 to 0.75
       const t = smoothstep(0.0, 0.75, p);
 
-      // Sphere radius and positioning:
-      // At rest (p = 0): sphere sits in the lower portion of the hero,
-      // bottom edge completely visible and NOT cut off (~30px above bottom edge).
-      // When centered (p -> 1): sphere moves to screen center and enlarges,
-      // fully within screen boundaries and NOT cut off on any side.
-      const rWorldRest = minDim * 0.22;
-      const rWorldCenter = minDim * 0.35;
-      const sphereRadius = rWorldRest + (rWorldCenter - rWorldRest) * t;
+      // Restore grand sphere size:
+      // At rest (p = 0): majestic horizon arc rising from the bottom
+      // When centered (p -> 0.75+): sphere rises to screen center and enlarges
+      const sphereRadius = baseRadius * (1.0 + 0.35 * t);
 
-      const maxApparentRest = rWorldRest * 1.05;
-      const restCenterY = height - maxApparentRest - 30;
+      const restCenterY = height + 0.34 * baseRadius;
       const centerCenterY = height * 0.5;
 
       const sphereCenterY = restCenterY + (centerCenterY - restCenterY) * t;
@@ -651,6 +646,17 @@ export default function CanvasHoneycomb({ trackRef, textRef }) {
           activeItem, sphereCenterX, sphereCenterY, sphereRadius,
           cameraZ, cameraFocal, curRotY, curRotX, 1.0
         );
+      }
+
+      // Softly dissolve bottom edge of sphere into background at rest so hexagons never hit a sharp cut
+      if (t < 0.5) {
+        const fadeH = 50;
+        const bottomFade = ctx.createLinearGradient(0, height - fadeH, 0, height);
+        const fadeAlpha = 1.0 - t * 2.0;
+        bottomFade.addColorStop(0, 'rgba(69, 66, 63, 0)');
+        bottomFade.addColorStop(1, `rgba(69, 66, 63, ${fadeAlpha})`);
+        ctx.fillStyle = bottomFade;
+        ctx.fillRect(0, height - fadeH, width, fadeH);
       }
     }
 

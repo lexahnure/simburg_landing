@@ -14,10 +14,9 @@ export default function HomePage() {
       <section
         ref={trackRef}
         id="hero-track"
-        className="hero-section hero-scroll-track"
+        className="hero-scroll-track"
       >
         <div className="hero-sticky-viewport">
-          <div className="hero-static-bg" />
           <CanvasHoneycomb
             trackRef={trackRef}
             textRef={textRef}

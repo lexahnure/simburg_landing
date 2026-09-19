@@ -445,10 +445,12 @@ img {
     height: 180vh !important;
     min-height: 0 !important;
     padding: 0 !important;
+    background-color: #45423f !important;
   }
 
   .hero-sticky-viewport {
     height: 100vh !important;
+    background-color: #45423f !important;
   }
 
   .hero-sticky-viewport .hero-container {
@@ -643,9 +645,11 @@ img {
     height: 160vh !important;
     min-height: 0 !important;
     padding: 0 !important;
+    background-color: #45423f !important;
   }
   .hero-sticky-viewport {
     height: 100vh !important;
+    background-color: #45423f !important;
   }
   .hero-sticky-viewport .hero-container {
     padding: 96px 20px 40px !important;
