@@ -212,5 +212,36 @@ button, input, select, textarea {
   color: #FFFFFF !important;
 }
 
+/* Hero 3D Hex-Sphere Scroll Track & Sticky Viewport */
+.hero-scroll-track {
+  position: relative;
+  width: 100%;
+  height: 250vh;
+  background-color: #030a1c;
+}
 
+.hero-sticky-viewport {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 95%, #0e357d 0%, #081d48 45%, #05122c 80%, #030a1c 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+.hero-whiteout-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F8FAFC;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.04s linear;
+}

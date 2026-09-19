@@ -1,64 +1,82 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import CanvasHoneycomb from '../components/CanvasHoneycomb';
 import ScrollReveal from '../components/ScrollReveal';
 import TeamCtaBanner from '../components/TeamCtaBanner';
 
 export default function HomePage() {
+  const trackRef = useRef(null);
+  const overlayRef = useRef(null);
+  const textRef = useRef(null);
+
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero Section Scroll Track */}
       <section
-        className="hero-section"
-        style={{
-          height: 724,
-          background: '#003E83',
-          position: 'relative',
-          overflow: 'hidden',
-          paddingTop: 84,
-          boxSizing: 'border-box',
-        }}
+        ref={trackRef}
+        id="hero-track"
+        className="hero-section hero-scroll-track"
       >
-        <CanvasHoneycomb />
-        <div
-          className="hero-container"
-          style={{
-            maxWidth: 1240,
-            margin: '0 auto',
-            padding: '0 24px',
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'center',
-            pointerEvents: 'none',
-          }}
-        >
-          <div className="hero-text-wrap" style={{ maxWidth: 560, pointerEvents: 'auto' }}>
-            <h1
-              className="hero-title"
+        <div className="hero-sticky-viewport">
+          <CanvasHoneycomb
+            trackRef={trackRef}
+            overlayRef={overlayRef}
+            textRef={textRef}
+          />
+          <div
+            ref={overlayRef}
+            className="hero-whiteout-overlay"
+          />
+          <div
+            className="hero-container"
+            style={{
+              maxWidth: 1240,
+              margin: '0 auto',
+              padding: '0 24px',
+              width: '100%',
+              height: '100%',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              pointerEvents: 'none',
+              zIndex: 10,
+            }}
+          >
+            <div
+              ref={textRef}
+              className="hero-text-wrap"
               style={{
-                fontSize: 'clamp(32px, 4.6vw, 52px)',
-                lineHeight: 1.12,
-                color: '#FFFFFF',
-                fontWeight: 700,
-                margin: '0 0 22px',
-                letterSpacing: '-0.025em',
+                maxWidth: 560,
+                pointerEvents: 'auto',
+                willChange: 'opacity, transform',
               }}
             >
-              Standards-based software infrastructure for SIM and eSIM operations
-            </h1>
-            <p
-              className="hero-desc"
-              style={{
-                fontSize: 18,
-                lineHeight: 1.6,
-                color: '#C6D2ED',
-                margin: '0 0 32px',
-                maxWidth: 520,
-              }}
-            >
-              Simburg develops independent software platforms for remote SIM provisioning, smart card operating systems, and remote lifecycle management. Engineered strictly to open international standards.
-            </p>
+              <h1
+                className="hero-title"
+                style={{
+                  fontSize: 'clamp(32px, 4.6vw, 52px)',
+                  lineHeight: 1.12,
+                  color: '#FFFFFF',
+                  fontWeight: 700,
+                  margin: '0 0 22px',
+                  letterSpacing: '-0.025em',
+                }}
+              >
+                Standards-based software infrastructure for SIM and eSIM operations
+              </h1>
+              <p
+                className="hero-desc"
+                style={{
+                  fontSize: 18,
+                  lineHeight: 1.6,
+                  color: '#C6D2ED',
+                  margin: '0 0 32px',
+                  maxWidth: 520,
+                }}
+              >
+                Simburg develops independent software platforms for remote SIM provisioning, smart card operating systems, and remote lifecycle management. Engineered strictly to open international standards.
+              </p>
+            </div>
           </div>
         </div>
       </section>
