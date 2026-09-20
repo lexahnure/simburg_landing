@@ -16,6 +16,16 @@ export default function AboutPage() {
               <p className="about-hero-desc">
                 Simburg was founded by telecom and embedded software engineers to provide operators and device makers with standards-compliant alternatives to closed proprietary ecosystems.
               </p>
+              <div className="about-hero-stats">
+                <div className="about-hero-stat">
+                  <div className="about-hero-stat-value">20+ years</div>
+                  <div className="about-hero-stat-label">Founders in telecom</div>
+                </div>
+                <div className="about-hero-stat">
+                  <div className="about-hero-stat-value">Since 2023</div>
+                  <div className="about-hero-stat-label">Serving operators and device makers</div>
+                </div>
+              </div>
             </div>
           </ScrollReveal>
         </div>

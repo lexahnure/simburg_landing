@@ -1638,8 +1638,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 /* 1. About Hero Section */
 .about-hero-section {
   background-color: #F5F5F4;
-  padding-top: 132px;
-  padding-bottom: 72px;
+  padding-top: 140px;
+  padding-bottom: 100px;
 }
 
 .about-hero-container {
@@ -1649,7 +1649,7 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .about-hero-text {
-  max-width: 600px;
+  max-width: 800px;
   text-align: left;
 }
 
@@ -1658,7 +1658,7 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   font-size: 50px;
   font-weight: 700 !important;
   line-height: 1.1;
-  letter-spacing: -0.03em !important;
+  letter-spacing: -1.5px !important;
   font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
   color: #000000;
   margin: 0 0 20px 0;
@@ -1671,6 +1671,38 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   line-height: 1.5;
   color: #374151;
   margin: 0;
+  max-width: 800px;
+}
+
+.about-hero-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 80px;
+  margin-top: 40px;
+}
+
+.about-hero-stat {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.about-hero-stat-value {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 46px;
+  letter-spacing: -1.6px;
+  color: #000000;
+}
+
+.about-hero-stat-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  color: #374151;
 }
 
 /* 2. Architectural Integrity by Design */

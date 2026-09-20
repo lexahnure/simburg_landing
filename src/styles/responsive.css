@@ -514,8 +514,11 @@ img {
   /* About Page Hero on Tablet */
   .about-hero-text {
     width: 100% !important;
-    max-width: 600px !important;
+    max-width: 800px !important;
     text-align: left !important;
+  }
+  .about-hero-stats {
+    gap: 48px !important;
   }
 
   /* About & Contact Tablet Styles */
@@ -1054,6 +1057,20 @@ img {
   .about-hero-title,
   .contact-hero-title {
     font-size: 34px !important;
+  }
+  .about-hero-stats {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 24px !important;
+    margin-top: 32px !important;
+  }
+  .about-hero-stat-value {
+    font-size: 32px !important;
+    line-height: 38px !important;
+  }
+  .about-hero-stat-label {
+    font-size: 16px !important;
+    line-height: 24px !important;
   }
   .about-integrity-title,
   .about-specs-title,
