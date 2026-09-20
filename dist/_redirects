@@ -1,0 +1,11 @@
+/index.dc.html       /                  301
+/about.dc.html       /about             301
+/contact.dc.html     /contact           301
+/privacy             /privacy-policy    301
+/privacy.html        /privacy-policy    301
+/privacy-policy.html /privacy-policy    301
+/product-rsp.dc.html /product-rsp       301
+/product-edoc.dc.html /product-edoc     301
+/product-sim-os.dc.html /product-sim-os 301
+/product-ota.dc.html /product-ota       301
+/*                   /index.html        200
