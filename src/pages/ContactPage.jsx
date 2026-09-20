@@ -13,19 +13,93 @@ export default function ContactPage() {
     agreePrivacy: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [serverError, setServerError] = useState('');
+
+  const validateEmail = (email) => {
+    if (!email || !email.trim()) {
+      return 'Company email is required.';
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return 'Please enter a valid email address (e.g., name@company.com).';
+    }
+    return '';
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    const val = type === 'checkbox' ? checked : value;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: val,
     }));
+
+    if (name === 'companyEmail' && emailError) {
+      setEmailError(validateEmail(val));
+    }
+    if (serverError) {
+      setServerError('');
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleEmailBlur = () => {
+    if (formData.companyEmail) {
+      setEmailError(validateEmail(formData.companyEmail));
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.companyEmail || !formData.agreePrivacy) return;
-    setSubmitted(true);
+    setServerError('');
+
+    if (!formData.agreePrivacy) {
+      return;
+    }
+
+    const emailErr = validateEmail(formData.companyEmail);
+    if (emailErr) {
+      setEmailError(emailErr);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const submissionData = new FormData();
+      submissionData.append("access_key", "78773ab4-afac-44da-ac34-6aa5cf26e284");
+      submissionData.append("name", `${formData.firstName.trim()} ${formData.lastName.trim()}`);
+      submissionData.append("first_name", formData.firstName.trim());
+      submissionData.append("last_name", formData.lastName.trim());
+      submissionData.append("email", formData.companyEmail.trim());
+      submissionData.append("company_name", formData.companyName.trim());
+      if (formData.message.trim()) {
+        submissionData.append("message", formData.message.trim());
+      }
+      // Send NDA checkbox value
+      submissionData.append("require_nda", formData.requireNda ? "Yes" : "No");
+      // Note: agreePrivacy is intentionally NOT appended as requested
+      submissionData.append("subject", `New Consultation Request: ${formData.firstName.trim()} ${formData.lastName.trim()} (${formData.companyName.trim()})`);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: submissionData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitted(true);
+      } else {
+        setServerError(data.message || 'Submission failed. Please check your inputs and try again.');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      setServerError('A network error occurred. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,6 +140,12 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="contact-form">
+                  {serverError && (
+                    <div className="form-server-error" role="alert">
+                      {serverError}
+                    </div>
+                  )}
+
                   <div className="form-grid-2col">
                     <div className="form-group">
                       <label htmlFor="firstName" className="form-label">First name</label>
@@ -102,9 +182,17 @@ export default function ContactPage() {
                         name="companyEmail"
                         value={formData.companyEmail}
                         onChange={handleChange}
+                        onBlur={handleEmailBlur}
                         required
-                        className="form-input"
+                        className={`form-input ${emailError ? 'input-error' : ''}`}
+                        aria-invalid={!!emailError}
+                        aria-describedby={emailError ? 'companyEmail-error' : undefined}
                       />
+                      {emailError && (
+                        <span id="companyEmail-error" className="form-field-error" role="alert">
+                          {emailError}
+                        </span>
+                      )}
                     </div>
                     <div className="form-group">
                       <label htmlFor="companyName" className="form-label">Company name</label>
@@ -153,7 +241,6 @@ export default function ContactPage() {
                         name="agreePrivacy"
                         checked={formData.agreePrivacy}
                         onChange={handleChange}
-                        required
                         className="form-checkbox"
                       />
                       <span>
@@ -166,8 +253,12 @@ export default function ContactPage() {
                   </div>
 
                   <div className="form-action-row">
-                    <button type="submit" className="contact-submit-btn">
-                      Request Consultation
+                    <button
+                      type="submit"
+                      disabled={!formData.agreePrivacy || isSubmitting}
+                      className="contact-submit-btn"
+                    >
+                      {isSubmitting ? 'Sending...' : 'Request Consultation'}
                     </button>
                   </div>
                 </form>

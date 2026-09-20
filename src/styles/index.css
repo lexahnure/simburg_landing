@@ -1726,6 +1726,36 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   color: #143675;
 }
 
+.form-input.input-error {
+  border-color: #DC2626 !important;
+  background-color: #FEF2F2 !important;
+}
+
+.form-input.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+}
+
+.form-field-error {
+  display: block;
+  margin-top: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  color: #DC2626;
+  line-height: 1.4;
+}
+
+.form-server-error {
+  padding: 12px 16px;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 4px;
+  color: #B91C1C;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
 .form-action-row {
   display: flex;
   justify-content: flex-end;
@@ -1743,12 +1773,24 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   font-weight: 600;
   cursor: pointer;
   box-sizing: border-box;
-  transition: background-color 0.2s ease, transform 0.15s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
 }
 
-.contact-submit-btn:hover {
+.contact-submit-btn:hover:not(:disabled) {
   background-color: #143675;
   transform: translateY(-1px);
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.contact-submit-btn:disabled:hover {
+  background-color: #1C479C !important;
+  transform: none !important;
 }
 
 .contact-success-box {
