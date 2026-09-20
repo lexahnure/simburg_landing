@@ -858,6 +858,23 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   transform: scale(1.03);
 }
 
+.clients-row {
+  max-width: 1240px;
+  margin: 32px auto 0;
+  display: flex;
+  align-items: center;
+  padding: 0 40px 32px;
+  border-bottom: 1px solid #E7E5E4;
+  box-sizing: border-box;
+}
+
+.client-logo-img {
+  height: 28px;
+  max-height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* --- The Cost of the Vendor You Already Have (Section 3) --- */
 .cost-section {
   position: relative;
@@ -1150,50 +1167,262 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 .start-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 40px;
   background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 16px;
-  padding: 40px;
+  border: none;
+  padding: 0;
   align-items: center;
 }
 
 .start-diagram-panel {
-  background: #F5F5F4;
-  border-radius: 12px;
-  padding: 40px 24px;
+  background: #FAFAF9;
+  border-radius: 4px;
+  padding: 32px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 280px;
+  min-height: 320px;
+  box-sizing: border-box;
 }
 
+/* Tab 1: MVNO */
 .start-diagram-flow {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .flow-node {
   background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 14px 22px;
-  border-radius: 10px;
+  border: 1px solid #D6D3D1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
-  font-size: 16px;
-  color: #0F172A;
+  font-size: 18px;
+  color: #18181B;
   text-align: center;
 }
 
+.flow-node-active {
+  background: #EDF5FF;
+  border-color: #9BC3FA;
+}
+
 .flow-arrow {
-  color: #94A3B8;
+  color: #D6D3D1;
   display: flex;
   align-items: center;
 }
 
+/* Tab 2: IoT Provider */
+.start-iot-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.start-iot-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.start-badge {
+  padding: 9px 13px;
+  border-radius: 6px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge-lime {
+  background: #ECFCCB;
+  color: #444441;
+}
+
+.badge-emerald {
+  background: #D1FAE5;
+  color: #444441;
+}
+
+.badge-muted {
+  background: #F5F5F5;
+  border: 1px solid #E7E5E4;
+  color: #737373;
+}
+
+.badge-white {
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  color: #444441;
+}
+
+.flow-arrow-bidirectional {
+  color: #94A3B8;
+}
+
+.start-diagram-caption {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  color: #737373;
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+/* Tab 3: Card manufacturer stack */
+.start-stack-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 390px;
+}
+
+.stack-box {
+  background: #FFFFFF;
+  border: 1px solid #D6D3D1;
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #18181B;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.stack-box-active {
+  background: #EDF5FF;
+  border-color: #9BC3FA;
+}
+
+/* Tab 4: Automotive timeline */
+.start-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.start-timeline-track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 24px 0 12px;
+  box-sizing: border-box;
+}
+
+.start-timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 16px;
+  right: 32px;
+  height: 1px;
+  background-color: #D6D3D1;
+  z-index: 1;
+}
+
+.timeline-arrow {
+  position: absolute;
+  right: 18px;
+  top: -2px;
+  color: #D6D3D1;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-point {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #A3A3A3;
+  box-sizing: border-box;
+}
+
+.dot-active {
+  background-color: #16A34A;
+}
+
+.timeline-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #444441;
+}
+
+/* Tab 5: Government specs */
+.start-specs-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 460px;
+}
+
+.specs-header {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #737373;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.spec-row {
+  border-bottom: 1px solid #D6D3D1;
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spec-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #18181B;
+}
+
+.spec-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #71717A;
+}
+
+/* Start Content (Right column) */
 .start-content {
   display: flex;
   flex-direction: column;
@@ -1201,26 +1430,28 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .start-content-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
   font-size: 25px;
-  font-weight: 700;
-  color: #0F172A;
+  font-weight: 700 !important;
+  color: #000000;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
 .start-content-desc {
-  font-size: 17px;
-  line-height: 1.6;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
   color: #374151;
   margin: 0;
 }
 
 .start-meta-row {
   display: flex;
-  gap: 48px;
-  margin-top: 12px;
-  padding-top: 24px;
+  gap: 40px;
+  margin-top: 4px;
+  padding-top: 20px;
   border-top: 1px solid #F1F5F9;
 }
 
@@ -1231,17 +1462,40 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .start-meta-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
   font-weight: 700;
-  color: #64748B;
+  color: #18181B;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .start-meta-value {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #0F172A;
+  color: #374151;
+  white-space: pre-wrap;
+}
+
+.start-link-wrap {
+  margin-top: 8px;
+}
+
+.start-link-btn {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1C479C;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.start-link-btn:hover {
+  color: #0A2540;
+  transform: translateX(4px);
 }
 
 /* --- Engineered on open standards (Section 6) --- */

@@ -15,40 +15,205 @@ const START_TABS = [
 
 const START_POINTS = {
   'MVNO': {
+    type: 'mvno',
     title: 'Launching eSIM without running your own stack',
     desc: 'An SM-DP+ under your own brand, integrated into the BSS you already run. Profiles in an open, auditable format.',
-    flow: ['Your BSS', 'SM-DP+', 'eUICC'],
-    runsOn: 'RSP Solution',
-    specs: 'SGP.22 · SAS-SM',
+    meta: [
+      { label: 'RUNS ON', value: 'RSP Solution' },
+      { label: 'SPECS', value: 'SGP.22 · SAS-SM' },
+    ],
+    linkText: 'See the RSP integration scope ›',
+    linkUrl: '/product-rsp',
   },
   'IoT provider': {
-    title: 'Scalable profile switching for global device fleets',
-    desc: 'Manage remote profiles across massive cellular IoT deployments under GSMA SGP.31/SGP.32 without vendor lock-in.',
-    flow: ['Device Fleet', 'IoT RSP / eIM', 'eUICC'],
-    runsOn: 'RSP Solution · OTA Platform',
-    specs: 'GSMA SGP.31 / SGP.32',
+    type: 'iot',
+    title: 'Devices that ship before the network is chosen',
+    desc: 'Profiles loaded and switched over SGP.31 and SGP.32. No QR codes, no field visits, no user interaction.',
+    meta: [
+      { label: 'RUNS ON', value: 'RSP Solution   OTA Platform' },
+      { label: 'SPECS', value: 'SGP.31 / SGP.32 · ESipa' },
+    ],
+    linkText: 'See how IoT provisioning works ›',
+    linkUrl: '/product-rsp',
   },
   'Card manufacturer': {
-    title: 'Native OS deployment across any secure silicon',
-    desc: 'Deliver carrier-grade SIM, USIM, and eUICC products built on certified silicon from Infineon and Samsung.',
-    flow: ['Chip Silicon', 'Simburg OS', 'Card Issuance'],
-    runsOn: 'SIM/eSIM Operating System',
-    specs: 'GlobalPlatform · 3GPP Rel 15',
+    type: 'card',
+    title: 'One OS across the whole product range',
+    desc: 'From prepaid SIM to eUICC on a single codebase. Legacy estates stay supported while new products ship.',
+    meta: [
+      { label: 'RUNS ON', value: 'SIM/eSIM OS' },
+      { label: 'SPECS', value: '3GPP Rel 15 · Rel 9 legacy' },
+    ],
+    linkText: 'See the card OS architecture ›',
+    linkUrl: '/product-sim-os',
   },
   'Automotive': {
-    title: 'Reliable lifecycle management for connected vehicles',
-    desc: 'Long-term over-the-air profile provisioning and applet updates built to automotive temperature and endurance grades.',
-    flow: ['Connected Vehicle', 'eUICC / M2M', 'Telematics BSS'],
-    runsOn: 'RSP Solution · SIM/eSIM OS',
-    specs: 'GSMA M2M · SGP.02',
+    type: 'automotive',
+    title: 'Vehicles built once, activated per market',
+    desc: 'The eUICC is soldered during manufacturing. The profile is loaded remotely in the country where the vehicle is sold.',
+    meta: [
+      { label: 'RUNS ON', value: 'RSP Solution   SIM/eSIM OS' },
+      { label: 'SPECS', value: 'SGP.22 · SGP.32' },
+    ],
+    linkText: 'See the RSP integration scope ›',
+    linkUrl: '/product-rsp',
   },
   'Government': {
-    title: 'Sovereign electronic identity and travel documents',
-    desc: 'Meet stringent national security frameworks for ICAO-compliant ePassports, driver licences, and secure citizen credentials.',
-    flow: ['Identity Authority', 'EDS Platform', 'ePassport / eID'],
-    runsOn: 'Electronic Documents Solution',
-    specs: 'ICAO 9303 · BSI TR-03110',
+    type: 'government',
+    title: 'National schemes on infrastructure you control',
+    desc: 'Passports, driving licences and vehicle registrations, built against the specifications the scheme is audited on.',
+    meta: [
+      { label: 'RUNS ON', value: 'eDocuments Solution' },
+      { label: 'DEPLOYMENT', value: 'On-premises · your keys' },
+    ],
+    linkText: 'See the eDocuments scope ›',
+    linkUrl: '/product-edoc',
   },
+};
+
+const renderStartDiagram = (point) => {
+  switch (point.type) {
+    case 'mvno':
+      return (
+        <div className="start-diagram-flow">
+          <div className="flow-node">Your BSS</div>
+          <div className="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <div className="flow-node flow-node-active">SM-DP+</div>
+          <div className="flow-arrow" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <div className="flow-node">eUICC</div>
+        </div>
+      );
+    case 'iot':
+      return (
+        <div className="start-iot-wrap">
+          <div className="start-iot-flow">
+            <div className="start-badge badge-lime">Downloaded</div>
+            <div className="flow-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="start-badge badge-emerald">Enabled</div>
+            <div className="flow-arrow flow-arrow-bidirectional" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 8h10M13 4l4 4-4 4M17 16H7M11 20l-4-4 4-4"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="start-badge badge-muted">Disabled</div>
+            <div className="flow-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="start-badge badge-white">Deleted</div>
+          </div>
+          <p className="start-diagram-caption">every transition driven remotely by the eIM</p>
+        </div>
+      );
+    case 'card':
+      return (
+        <div className="start-stack-diagram">
+          <div className="stack-box">Your applets</div>
+          <div className="stack-box stack-box-active">Simburg card OS</div>
+          <div className="stack-box">Secure element</div>
+        </div>
+      );
+    case 'automotive':
+      return (
+        <div className="start-timeline-wrap">
+          <div className="start-timeline-track">
+            <div className="timeline-point">
+              <span className="timeline-dot" />
+              <span className="timeline-label">Factory</span>
+            </div>
+            <div className="timeline-point">
+              <span className="timeline-dot" />
+              <span className="timeline-label">Shipped</span>
+            </div>
+            <div className="timeline-point point-active">
+              <span className="timeline-dot dot-active" />
+              <span className="timeline-label">Activated</span>
+            </div>
+            <div className="timeline-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <p className="start-diagram-caption">eUICC soldered at build, market chosen at delivery</p>
+        </div>
+      );
+    case 'government':
+      return (
+        <div className="start-specs-wrap">
+          <div className="specs-header">IMPLEMENTED SPECIFICATIONS</div>
+          <div className="specs-list">
+            <div className="spec-row">
+              <span className="spec-name">ICAO Doc 9303</span>
+              <span className="spec-desc">travel documents</span>
+            </div>
+            <div className="spec-row">
+              <span className="spec-name">ISO/IEC 14443</span>
+              <span className="spec-desc">contactless</span>
+            </div>
+            <div className="spec-row">
+              <span className="spec-name">ISO/IEC 7816</span>
+              <span className="spec-desc">contact cards</span>
+            </div>
+            <div className="spec-row">
+              <span className="spec-name">SCOSTA</span>
+              <span className="spec-desc">national scheme</span>
+            </div>
+          </div>
+        </div>
+      );
+    default:
+      return null;
+  }
 };
 
 export default function HomePage() {
@@ -96,7 +261,7 @@ export default function HomePage() {
       </section>
 
 
-      {/* 2. Partners Section */}
+      {/* 2. Partners & Clients Section */}
       <section
         ref={standardsRef}
         id="standards"
@@ -135,6 +300,44 @@ export default function HomePage() {
                     src="/uploads/infineon.svg"
                     alt="Infineon"
                     className="partner-logo-img"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="clients-row">
+            <div className="partners-lead-col">
+              <p className="partners-lead">
+                In production with
+              </p>
+            </div>
+            <div className="partners-logos-col">
+              <div className="partner-logo-item">
+                <a
+                  href="https://www.sensorise.net"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-logo-link"
+                >
+                  <img
+                    src="/uploads/sensorise.png"
+                    alt="Sensorise"
+                    className="partner-logo-img client-logo-img"
+                  />
+                </a>
+              </div>
+              <div className="partner-logo-item">
+                <a
+                  href="https://vadessmartcard.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-logo-link"
+                >
+                  <img
+                    src="/uploads/vades.png"
+                    alt="Vades Smart Card"
+                    className="partner-logo-img client-logo-img"
                   />
                 </a>
               </div>
@@ -317,40 +520,24 @@ export default function HomePage() {
             {/* Display Card */}
             <div className="start-card">
               <div className="start-diagram-panel">
-                <div className="start-diagram-flow">
-                  {currentStart.flow.map((node, i) => (
-                    <React.Fragment key={node}>
-                      <div className="flow-node">{node}</div>
-                      {i < currentStart.flow.length - 1 && (
-                        <div className="flow-arrow" aria-hidden="true">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path
-                              d="M5 12h14M13 6l6 6-6 6"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
+                {renderStartDiagram(currentStart)}
               </div>
 
               <div className="start-content">
                 <h3 className="start-content-title">{currentStart.title}</h3>
                 <p className="start-content-desc">{currentStart.desc}</p>
                 <div className="start-meta-row">
-                  <div className="start-meta-item">
-                    <span className="start-meta-label">RUNS ON</span>
-                    <span className="start-meta-value">{currentStart.runsOn}</span>
-                  </div>
-                  <div className="start-meta-item">
-                    <span className="start-meta-label">SPECS</span>
-                    <span className="start-meta-value">{currentStart.specs}</span>
-                  </div>
+                  {currentStart.meta.map((item) => (
+                    <div className="start-meta-item" key={item.label}>
+                      <span className="start-meta-label">{item.label}</span>
+                      <span className="start-meta-value">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="start-link-wrap">
+                  <Link to={currentStart.linkUrl} className="start-link-btn">
+                    {currentStart.linkText}
+                  </Link>
                 </div>
               </div>
             </div>

@@ -970,7 +970,7 @@ img {
   .start-card {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
-    padding: 28px !important;
+    padding: 0 !important;
   }
   .standards-operate-container {
     grid-template-columns: 1fr !important;
@@ -990,6 +990,13 @@ img {
 
 @media (max-width: 768px) {
   .partners-card {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 20px !important;
+    padding: 24px 20px !important;
+  }
+  .clients-row {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
