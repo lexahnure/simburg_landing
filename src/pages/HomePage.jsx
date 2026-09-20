@@ -641,7 +641,7 @@ export default function HomePage() {
           <ScrollReveal delay={60}>
             <div className="engagement-list">
               {/* Row 1: Documentation */}
-              <div className="engagement-item active">
+              <div className="engagement-item">
                 <span className="engagement-number">1.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Documentation</h3>
