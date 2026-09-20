@@ -1192,4 +1192,648 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   color: #8E9BAE;
 }
 
+/* ==========================================================================
+   ABOUT PAGE STYLES (Figma Node 1456:100188)
+   ========================================================================== */
+
+.about-page-wrap {
+  background-color: #F5F5F4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. About Hero Section */
+.about-hero-section {
+  background-color: #F5F5F4;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+.about-hero-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.about-hero-text {
+  max-width: 600px;
+  text-align: left;
+}
+
+.about-hero-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 50px;
+  font-weight: 700 !important;
+  line-height: 1.1;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 20px 0;
+}
+
+.about-hero-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #374151;
+  margin: 0;
+}
+
+/* 2. Architectural Integrity by Design */
+.about-integrity-section {
+  background: linear-gradient(180deg, #F5F5F4 0%, #FFFFFF 100%);
+  padding: 60px 0 80px 0;
+}
+
+.about-integrity-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.about-integrity-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 38px;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  text-align: center;
+  margin: 0 0 44px 0;
+}
+
+.about-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.about-feature-card {
+  background: #FFFFFF;
+  border: 1px solid #E7E5E4;
+  border-radius: 4px;
+  padding: 32px 28px;
+  box-shadow: 0 5px 15px -10px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card-icon-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.feature-card-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.feature-card-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 20px;
+  font-weight: 700 !important;
+  line-height: 1.3;
+  letter-spacing: -0.02em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 14px 0;
+}
+
+.feature-card-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0;
+}
+
+/* 3. No Gaps, No Guesswork */
+.about-specs-section {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 50%, #F5F5F4 100%);
+  padding: 80px 0 90px 0;
+}
+
+.about-specs-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.about-specs-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-specs-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 44px;
+  font-weight: 700 !important;
+  line-height: 1.12;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 20px 0;
+}
+
+.about-specs-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #374151;
+  margin: 0;
+}
+
+.about-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.spec-card {
+  background: #FFFFFF;
+  border: 1px solid #D6D3D1;
+  border-radius: 4px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.spec-card-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 20px;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.spec-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #374151;
+}
+
+/* 4. Researching Next-Generation Form Factors */
+.about-roadmap-section {
+  background-color: #F5F5F4;
+  padding: 20px 0 120px 0;
+}
+
+.about-roadmap-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.about-roadmap-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 56px 48px;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 48px;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.04);
+}
+
+.roadmap-pills-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.roadmap-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 100px;
+  padding: 12px 24px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  width: fit-content;
+  box-sizing: border-box;
+}
+
+.pill-green {
+  background-color: #F0FDF4;
+  color: #166534;
+}
+
+.pill-blue {
+  background-color: #EFF6FF;
+  color: #1E40AF;
+}
+
+.pill-offset {
+  margin-left: 48px;
+}
+
+.pill-purple {
+  background-color: #F5F3FF;
+  color: #6B21A8;
+}
+
+.roadmap-pill-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.roadmap-info-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.roadmap-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 36px;
+  font-weight: 700 !important;
+  line-height: 1.15;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.roadmap-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0;
+}
+
+/* ==========================================================================
+   CONTACT PAGE STYLES (Figma Node 1461:101539)
+   ========================================================================== */
+
+.contact-page-wrap {
+  background-color: #F5F5F4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Contact Hero Section */
+.contact-hero-section {
+  background-color: #F5F5F4;
+  padding-top: 132px;
+  padding-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.contact-hero-content {
+  max-width: 560px;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-hero-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 50px;
+  font-weight: 700 !important;
+  line-height: 1.1;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.contact-hero-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #374151;
+  margin: 0;
+}
+
+.contact-hero-watermark {
+  position: absolute;
+  right: -100px;
+  top: -120px;
+  width: 720px;
+  height: 720px;
+  pointer-events: none;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.watermark-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 2. Contact Content Section */
+.contact-content-section {
+  background-color: #F5F5F4;
+  padding-bottom: 110px;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.contact-main-card {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Consultation Form */
+.contact-form-col {
+  background: #FFFFFF;
+  border-radius: 4px;
+  padding: 40px 48px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.contact-form-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 26px;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 28px 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-input {
+  height: 48px;
+  padding: 0 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  color: #0F172A;
+  background: #FFFFFF;
+  border: 1px solid #D0D5DD;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: #0048A0;
+  box-shadow: 0 0 0 3px rgba(0, 72, 160, 0.12);
+}
+
+.form-textarea {
+  padding: 14px 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  color: #0F172A;
+  background: #FFFFFF;
+  border: 1px solid #D0D5DD;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-textarea:focus {
+  border-color: #0048A0;
+  box-shadow: 0 0 0 3px rgba(0, 72, 160, 0.12);
+}
+
+.form-textarea::placeholder {
+  color: #9CA3AF;
+}
+
+.form-checkbox-row {
+  margin-top: 4px;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  accent-color: #0048A0;
+  cursor: pointer;
+}
+
+.form-action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.contact-submit-btn {
+  background-color: #0048A0;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 100px;
+  padding: 13px 32px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.contact-submit-btn:hover {
+  background-color: #00377B;
+  transform: translateY(-1px);
+}
+
+.contact-success-box {
+  padding: 36px 32px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.contact-success-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #DCFCE7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.contact-success-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 20px;
+  font-weight: 700 !important;
+  color: #166534;
+  margin: 0 0 8px 0;
+}
+
+.contact-success-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  color: #15803D;
+  margin: 0;
+}
+
+/* Sidebar */
+.contact-sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-standards-card {
+  background: #F1F5F9;
+  border-radius: 4px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.sidebar-card-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+  margin: 0 0 20px 0;
+}
+
+.standards-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.std-logo-pill {
+  background: #FFFFFF;
+  border-radius: 100px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+.std-logo-pill.pill-span-2 {
+  grid-column: span 2;
+}
+
+.std-pill-img {
+  max-height: 24px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.sidebar-eu-card {
+  background: #F1F5F9;
+  border-radius: 4px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.eu-stars-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0F172A;
+  flex-shrink: 0;
+}
+
+.eu-card-title {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+
 

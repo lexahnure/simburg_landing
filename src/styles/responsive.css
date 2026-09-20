@@ -87,7 +87,7 @@ img {
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 }
 
 .site-header .nav-item-link,
@@ -214,27 +214,28 @@ img {
 }
 
 .site-header .header-cta-btn {
-  background: #003E83;
+  background: #1C479C;
   color: #FFFFFF !important;
   text-decoration: none;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
-  padding: 11px 22px;
+  padding: 8px 20px;
   border-radius: 100px;
   white-space: nowrap;
   box-shadow: none;
-  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
   display: inline-block;
+  line-height: 24px;
 }
 
 .site-header.dark-hero .header-cta-btn {
   background: #FFFFFF;
-  color: #003E83 !important;
+  color: #1C479C !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .site-header.scrolled .header-cta-btn {
-  background: #003E83;
+  background: #1C479C;
   color: #FFFFFF !important;
   box-shadow: none;
 }
@@ -244,7 +245,8 @@ img {
   transform: translateY(-1px);
 }
 
-.site-header.scrolled .header-cta-btn:hover {
+.site-header.scrolled .header-cta-btn:hover,
+.site-header .header-cta-btn:hover {
   background: #0F172A;
   transform: translateY(-1px);
 }
@@ -510,39 +512,26 @@ img {
   }
 
   /* About Page Hero on Tablet */
-  .about-hero-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 0 !important;
-  }
-  .about-hero-logo-wrap {
-    order: -1 !important;
-    display: flex !important;
-    justify-content: center !important;
-    width: 100% !important;
-    margin-bottom: 28px !important;
-  }
-  .about-hero-logo {
-    height: clamp(56px, 7vw, 84px) !important;
-  }
   .about-hero-text {
     width: 100% !important;
-    max-width: 680px !important;
-    margin: 0 auto !important;
-    text-align: center !important;
+    max-width: 600px !important;
+    text-align: left !important;
   }
-  .about-hero-grid .page-hero-title {
-    margin: 0 auto 18px !important;
-    max-width: 640px !important;
-    text-align: center !important;
-    width: 100% !important;
+
+  /* About & Contact Tablet Styles */
+  .about-specs-container {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
   }
-  .about-hero-grid .page-hero-desc {
-    margin: 0 auto !important;
-    max-width: 540px !important;
-    text-align: center !important;
+  .about-roadmap-card {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+  .contact-main-card {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .contact-sidebar-col {
     width: 100% !important;
   }
 }
@@ -988,5 +977,57 @@ img {
     align-items: flex-start !important;
     gap: 16px !important;
   }
+
+  /* About Page Mobile */
+  .about-hero-section,
+  .contact-hero-section {
+    padding-top: 100px !important;
+    padding-bottom: 40px !important;
+  }
+  .about-hero-title,
+  .contact-hero-title {
+    font-size: 34px !important;
+  }
+  .about-integrity-title,
+  .about-specs-title,
+  .roadmap-title {
+    font-size: 28px !important;
+  }
+  .about-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .about-specs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .about-roadmap-card {
+    padding: 32px 20px !important;
+  }
+  .pill-offset {
+    margin-left: 0 !important;
+  }
+  
+  /* Contact Page Mobile */
+  .contact-form-col {
+    padding: 28px 20px !important;
+  }
+  .form-grid-2col {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .contact-hero-watermark {
+    width: 380px !important;
+    height: 380px !important;
+    right: -120px !important;
+    opacity: 0.3 !important;
+  }
+  .form-action-row {
+    justify-content: stretch !important;
+  }
+  .contact-submit-btn {
+    width: 100% !important;
+  }
 }
+
 

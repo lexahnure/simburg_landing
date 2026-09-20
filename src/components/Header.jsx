@@ -25,16 +25,13 @@ export default function Header() {
     setProductsOpen(false);
   }, [location.pathname]);
 
-  const isAbout = location.pathname === '/about' || location.pathname === '/about.html' || location.pathname === '/about.dc.html';
   const isDarkHero = isHome && !scrolled && !menuOpen;
-  const isTransparent = isAbout && !scrolled && !menuOpen;
 
   const headerClassNames = [
     'site-header',
     scrolled ? 'scrolled' : '',
     menuOpen ? 'menu-open' : '',
     isDarkHero ? 'dark-hero' : '',
-    isTransparent ? 'transparent-header' : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -133,17 +130,14 @@ export default function Header() {
           >
             About Us
           </Link>
-        </nav>
 
-        {/* Desktop CTA */}
-        <div className="desktop-cta">
           <Link
             to="/contact"
             className="header-cta-btn"
           >
             Contact Us
           </Link>
-        </div>
+        </nav>
 
         {/* Mobile Toggle Button */}
         <button
