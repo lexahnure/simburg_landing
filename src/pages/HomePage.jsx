@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CanvasHoneycomb from '../components/CanvasHoneycomb';
 import ScrollReveal from '../components/ScrollReveal';
@@ -220,7 +220,62 @@ export default function HomePage() {
   const textRef = useRef(null);
   const btnRef = useRef(null);
   const standardsRef = useRef(null);
+  const engagementListRef = useRef(null);
   const [activeTab, setActiveTab] = useState('MVNO');
+  const [activeEngagementStep, setActiveEngagementStep] = useState(-1);
+
+  useEffect(() => {
+    let rafId = null;
+
+    const handleScroll = () => {
+      if (!engagementListRef.current) return;
+      const list = engagementListRef.current;
+      const items = list.querySelectorAll('.engagement-item');
+      if (!items || items.length === 0) return;
+
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const listRect = list.getBoundingClientRect();
+
+      // If list is completely below or far above viewport, no active item
+      if (listRect.top > vh * 0.75 || listRect.bottom < vh * 0.20) {
+        setActiveEngagementStep(-1);
+        return;
+      }
+
+      // Reading focus line at 50% of viewport
+      const focusY = vh * 0.50;
+
+      let closestIdx = 0;
+      let minDistance = Infinity;
+
+      items.forEach((item, idx) => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(itemCenter - focusY);
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIdx = idx;
+        }
+      });
+
+      setActiveEngagementStep(closestIdx);
+    };
+
+    const onScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(handleScroll);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   const currentStart = START_POINTS[activeTab] || START_POINTS['MVNO'];
 
@@ -639,9 +694,9 @@ export default function HomePage() {
           </ScrollReveal>
 
           <ScrollReveal delay={60}>
-            <div className="engagement-list">
+            <div className="engagement-list" ref={engagementListRef}>
               {/* Row 1: Documentation */}
-              <div className="engagement-item">
+              <div className={`engagement-item ${activeEngagementStep === 0 ? 'active' : ''}`}>
                 <span className="engagement-number">1.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Documentation</h3>
@@ -652,7 +707,7 @@ export default function HomePage() {
               </div>
 
               {/* Row 2: Architecture review */}
-              <div className="engagement-item">
+              <div className={`engagement-item ${activeEngagementStep === 1 ? 'active' : ''}`}>
                 <span className="engagement-number">2.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Architecture review</h3>
@@ -663,7 +718,7 @@ export default function HomePage() {
               </div>
 
               {/* Row 3: Pilot */}
-              <div className="engagement-item">
+              <div className={`engagement-item ${activeEngagementStep === 2 ? 'active' : ''}`}>
                 <span className="engagement-number">3.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Pilot</h3>
@@ -674,7 +729,7 @@ export default function HomePage() {
               </div>
 
               {/* Row 4: Production */}
-              <div className="engagement-item">
+              <div className={`engagement-item ${activeEngagementStep === 3 ? 'active' : ''}`}>
                 <span className="engagement-number">4.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Production</h3>

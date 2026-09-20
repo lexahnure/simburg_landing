@@ -965,7 +965,7 @@ img {
   }
   .solutions-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px !important;
+    gap: 8px !important;
   }
   .start-card {
     grid-template-columns: 1fr !important;
