@@ -1001,6 +1001,17 @@ img {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
   }
+  .about-integrity-container {
+    padding: 40px 20px 60px 20px !important;
+  }
+  .about-specs-container {
+    padding: 0 20px !important;
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .about-roadmap-container {
+    padding: 0 20px !important;
+  }
   .about-roadmap-card {
     padding: 32px 20px !important;
   }
@@ -1009,18 +1020,16 @@ img {
   }
   
   /* Contact Page Mobile */
-  .contact-form-col {
+  .contact-main-card {
     padding: 28px 20px !important;
+    border-radius: 4px !important;
+  }
+  .contact-form-col {
+    padding: 0 !important;
   }
   .form-grid-2col {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
-  }
-  .contact-hero-watermark {
-    width: 380px !important;
-    height: 380px !important;
-    right: -120px !important;
-    opacity: 0.3 !important;
   }
   .form-action-row {
     justify-content: stretch !important;

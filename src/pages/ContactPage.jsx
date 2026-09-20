@@ -39,11 +39,6 @@ export default function ContactPage() {
               </p>
             </ScrollReveal>
           </div>
-
-          {/* Right Honeycomb Watermark */}
-          <div className="contact-hero-watermark" aria-hidden="true">
-            <img src="/uploads/contact-watermark.svg" alt="" className="watermark-svg" />
-          </div>
         </div>
       </section>
 
