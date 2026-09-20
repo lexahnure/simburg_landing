@@ -447,14 +447,14 @@ img {
     height: 250vh !important;
     min-height: 0 !important;
     padding: 0 !important;
-    background-color: #45423f !important;
+    background: radial-gradient(172.85% 100% at 50% 100%, #281E4F 0%, #1D274F 25%, #172234 50%, #121927 100%) !important;
   }
 
   .hero-sticky-viewport {
     position: -webkit-sticky !important;
     position: sticky !important;
     height: 100vh !important;
-    background-color: #45423f !important;
+    background: radial-gradient(172.85% 100% at 50% 100%, #281E4F 0%, #1D274F 25%, #172234 50%, #121927 100%) !important;
   }
 
   .hero-sticky-viewport .hero-container {
@@ -636,13 +636,13 @@ img {
     height: 250vh !important;
     min-height: 0 !important;
     padding: 0 !important;
-    background-color: #45423f !important;
+    background: radial-gradient(172.85% 100% at 50% 100%, #281E4F 0%, #1D274F 25%, #172234 50%, #121927 100%) !important;
   }
   .hero-sticky-viewport {
     position: -webkit-sticky !important;
     position: sticky !important;
     height: 100vh !important;
-    background-color: #45423f !important;
+    background: radial-gradient(172.85% 100% at 50% 100%, #281E4F 0%, #1D274F 25%, #172234 50%, #121927 100%) !important;
   }
   .hero-sticky-viewport .hero-container {
     padding: 96px 20px 40px !important;

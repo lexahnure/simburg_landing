@@ -460,7 +460,7 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       onScroll();
     }
 
-    function drawCell(item) {
+    function drawCell(item, sphereGrad) {
       const { projectedVerts, dotL, isActive } = item;
       if (projectedVerts.length < 3) return;
 
@@ -480,18 +480,22 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
         ctx.lineWidth = 1.8;
         ctx.stroke();
       } else {
-        const baseR = 12 + dotL * 18;
-        const baseG = 30 + dotL * 42;
-        const baseB = 68 + dotL * 80;
-
-        ctx.fillStyle = `rgb(${Math.round(baseR)}, ${Math.round(baseG)}, ${Math.round(baseB)})`;
+        ctx.fillStyle = sphereGrad;
         ctx.fill();
 
-        ctx.strokeStyle = 'rgba(6, 16, 38, 0.9)';
+        if (dotL < 0.5) {
+          ctx.fillStyle = `rgba(0, 0, 0, ${(0.5 - dotL) * 0.4})`;
+          ctx.fill();
+        } else {
+          ctx.fillStyle = `rgba(255, 255, 255, ${(dotL - 0.5) * 0.12})`;
+          ctx.fill();
+        }
+
+        ctx.strokeStyle = 'rgba(6, 16, 38, 0.75)';
         ctx.lineWidth = 0.9;
         ctx.stroke();
 
-        ctx.strokeStyle = `rgba(80, 150, 255, ${0.15 * dotL})`;
+        ctx.strokeStyle = `rgba(80, 150, 255, ${0.12 * dotL})`;
         ctx.lineWidth = 0.6;
         ctx.stroke();
       }
@@ -606,6 +610,18 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       const sphereCenterY = padY + currentCenterY_view;
       const sphereRadius = currentRadius;
 
+      // 90deg Linear Gradient: #032A4F 0%, #1B2A4F 25%, #172234 50%, #0C101A 100%
+      const sphereGrad = ctx.createLinearGradient(
+        sphereCenterX - sphereRadius,
+        sphereCenterY,
+        sphereCenterX + sphereRadius,
+        sphereCenterY
+      );
+      sphereGrad.addColorStop(0, '#032A4F');
+      sphereGrad.addColorStop(0.25, '#1B2A4F');
+      sphereGrad.addColorStop(0.5, '#172234');
+      sphereGrad.addColorStop(1, '#0C101A');
+
       const curRotX = EARTH_TILT_X;
       const curRotY = sphereRotY;
 
@@ -672,8 +688,14 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
 
       renderList.sort((a, b) => a.worldZ - b.worldZ);
 
+      // Base sphere disc to provide seamless body under the honeycomb mesh
+      ctx.beginPath();
+      ctx.arc(sphereCenterX, sphereCenterY, sphereRadius * 0.998, 0, Math.PI * 2);
+      ctx.fillStyle = sphereGrad;
+      ctx.fill();
+
       for (const item of renderList) {
-        drawCell(item);
+        drawCell(item, sphereGrad);
       }
 
       const activeItem = renderList.find(i => i.isActive);
