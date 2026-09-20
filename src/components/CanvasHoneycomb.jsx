@@ -388,9 +388,11 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       if (!cell) return false;
       const rot = rotatePoint(cell.center, rotY, EARTH_TILT_X);
       if (isCentered) {
-        return rot[2] > 0.38 && Math.abs(rot[1]) < 0.70 && Math.abs(rot[0]) < 0.70;
+        // Centered stage: front-facing and close to the sphere center
+        return rot[2] > 0.55 && Math.abs(rot[0]) < 0.35 && Math.abs(rot[1]) < 0.35;
       }
-      return rot[2] > 0.32 && rot[1] >= -0.88 && rot[1] <= 0.40 && Math.abs(rot[0]) < 0.70;
+      // Horizon stage: front-facing and visible in the top center arc of the horizon
+      return rot[2] > 0.48 && Math.abs(rot[0]) < 0.32 && rot[1] >= -0.78 && rot[1] <= -0.42;
     }
 
     function pickNextActiveCell(isCentered = false) {
@@ -400,15 +402,22 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       }).filter(item => {
         if (item.cell.id === activeCellId) return false;
         if (isCentered) {
-          return item.rot[2] > 0.38 && Math.abs(item.rot[1]) < 0.70 && Math.abs(item.rot[0]) < 0.70;
+          return item.rot[2] > 0.55 && Math.abs(item.rot[0]) < 0.35 && Math.abs(item.rot[1]) < 0.35;
         }
-        return item.rot[2] > 0.32 &&
-               item.rot[1] >= -0.88 && item.rot[1] <= 0.40 &&
-               Math.abs(item.rot[0]) < 0.65;
+        return item.rot[2] > 0.48 &&
+               Math.abs(item.rot[0]) < 0.32 &&
+               item.rot[1] >= -0.78 && item.rot[1] <= -0.42;
       });
 
       if (candidates.length > 0) {
-        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        // Prefer candidates closest to center (rot[0] near 0)
+        candidates.sort((a, b) => {
+          const distA = Math.hypot(a.rot[0], isCentered ? a.rot[1] : (a.rot[1] + 0.60));
+          const distB = Math.hypot(b.rot[0], isCentered ? b.rot[1] : (b.rot[1] + 0.60));
+          return distA - distB;
+        });
+        const topPool = candidates.slice(0, Math.min(candidates.length, 5));
+        const pick = topPool[Math.floor(Math.random() * topPool.length)];
         activeCellId = pick.cell.id;
         activeIconIndex = (activeIconIndex + 1) % ICONS.length;
         pick.cell.iconIndex = activeIconIndex;

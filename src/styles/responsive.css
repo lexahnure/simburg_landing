@@ -588,6 +588,27 @@ img {
   .product-badges-col {
     grid-column: 1 / -1 !important;
   }
+  .product-hero-light {
+    padding: 72px 20px !important;
+  }
+  .product-feature-section {
+    padding: 72px 20px !important;
+  }
+  .product-feature-grid-2col,
+  .product-feature-grid-2col.is-reversed {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 40px !important;
+  }
+  .product-visual-card {
+    padding: 32px 20px !important;
+  }
+  .diag-flow-row {
+    gap: 8px !important;
+  }
+  .diag-node {
+    padding: 10px 12px !important;
+    min-width: 96px !important;
+  }
 
   .page-hero-section {
     padding: 130px 20px 60px !important;
@@ -758,6 +779,52 @@ img {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 20px !important;
+  }
+  .product-hero-light {
+    padding: 48px 20px !important;
+  }
+  .product-hero-container {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .product-hero-icon-box,
+  .product-hero-icon-img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .product-feature-section {
+    padding: 48px 20px !important;
+  }
+  .product-feature-grid-2col,
+  .product-feature-grid-2col.is-reversed {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .product-feature-grid-2col.is-reversed .product-visual-col {
+    order: 2 !important;
+  }
+  .product-feature-grid-2col.is-reversed .product-feature-text-col {
+    order: 1 !important;
+  }
+  .product-visual-card {
+    padding: 24px 16px !important;
+    overflow-x: auto !important;
+  }
+  .diag-flow-row {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 12px !important;
+  }
+  .diag-entitle-row {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .product-cta-section {
+    padding: 40px 16px 60px !important;
+  }
+  .product-cta-card {
+    padding: 40px 20px !important;
+    border-radius: 16px !important;
   }
   .product-feature-row {
     padding: 44px 20px !important;
