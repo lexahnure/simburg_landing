@@ -9,7 +9,6 @@ export default function PrivacyPolicyPage() {
         <div className="privacy-hero-container">
           <ScrollReveal>
             <div className="privacy-hero-content">
-              <span className="privacy-hero-badge">Legal &amp; Compliance</span>
               <h1 className="privacy-hero-title">Privacy Notice</h1>
               <div className="privacy-meta-row" style={{ marginTop: 8 }}>
                 <span className="privacy-meta-item">
