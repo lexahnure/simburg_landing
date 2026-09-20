@@ -168,7 +168,7 @@ button, input, select, textarea {
 /* Product Page Styles (Figma Node 1458:100711) */
 .product-hero-light {
   background-color: #F8F9FA;
-  padding: 88px 24px;
+  padding: 200px 24px 100px;
 }
 
 .product-hero-container {

@@ -589,7 +589,7 @@ img {
     grid-column: 1 / -1 !important;
   }
   .product-hero-light {
-    padding: 72px 20px !important;
+    padding: 140px 20px 70px !important;
   }
   .product-feature-section {
     padding: 72px 20px !important;
@@ -781,7 +781,7 @@ img {
     gap: 20px !important;
   }
   .product-hero-light {
-    padding: 48px 20px !important;
+    padding: 120px 20px 60px !important;
   }
   .product-hero-container {
     flex-direction: column !important;
