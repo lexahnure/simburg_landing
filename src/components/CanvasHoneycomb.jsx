@@ -490,29 +490,20 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
         ctx.fillStyle = sphereGrad;
         ctx.fill();
 
-        // Active highlight fill (#08204D) and cyan border with smooth fade
+        // Active highlight fill (#18284D) without cyan border thickness
         ctx.save();
         ctx.globalAlpha = activeFade;
-        ctx.fillStyle = '#08204D';
+        ctx.fillStyle = '#18284D';
         ctx.fill();
-
-        ctx.strokeStyle = 'rgba(0, 229, 255, 0.85)';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
         ctx.restore();
 
-        if (activeFade < 0.99) {
-          ctx.save();
-          ctx.globalAlpha = 1.0 - activeFade;
-          ctx.strokeStyle = 'rgba(6, 16, 38, 0.75)';
-          ctx.lineWidth = 0.9;
-          ctx.stroke();
+        ctx.strokeStyle = 'rgba(6, 16, 38, 0.75)';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
 
-          ctx.strokeStyle = `rgba(80, 150, 255, ${0.12 * dotL})`;
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-          ctx.restore();
-        }
+        ctx.strokeStyle = `rgba(80, 150, 255, ${0.12 * dotL})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
       } else {
         ctx.fillStyle = sphereGrad;
         ctx.fill();
@@ -598,11 +589,11 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       icon.draw(ctx, '#ffffff');
       ctx.restore();
 
-      // 2. Draw "online" badge with green dot near the icon
+      // 2. Draw "ONLINE" badge with green dot near the icon
       ctx.save();
       ctx.globalAlpha = fadeAlpha;
 
-      const badgeW = 46;
+      const badgeW = 50;
       const badgeH = 16;
       const badgeR = 8;
 
@@ -636,12 +627,12 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       ctx.fill();
       ctx.restore();
 
-      // "online" text
+      // "ONLINE" text
       ctx.fillStyle = '#F8FAFC';
-      ctx.font = '600 9px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.font = '600 8.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       ctx.textAlign = 'left';
       ctx.textBaseline = 'middle';
-      ctx.fillText('online', dotX + 5.5, dotY + 0.5);
+      ctx.fillText('ONLINE', dotX + 5.5, dotY + 0.5);
 
       ctx.restore();
     }
@@ -666,8 +657,8 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       const t2 = smoothstep(0.0, 1.0, p2);
 
       const rRest = minDim * 0.78;
-      const rCenter = minDim * 0.42;
-      const rUp = minDim * 0.44;
+      const rCenter = minDim * 0.98;
+      const rUp = minDim * 1.15;
 
       const restCenterY_view = vH + 0.38 * rRest;
       const centerCenterY_view = vH * 0.50;

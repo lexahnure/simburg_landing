@@ -759,7 +759,7 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 .hero-text-wrap {
   max-width: 840px;
-  margin: -60px auto 0;
+  margin: -80px auto 0;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
@@ -951,6 +951,7 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 .cost-card {
   background: #FFFFFF;
   border: 1px solid #E7E5E4;
+  border-bottom: 0;
   border-radius: 4px 4px 0 0;
   padding: 24px 20px;
   display: flex;
@@ -1039,10 +1040,8 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .sol-icon-box {
-  width: 54px;
-  height: 54px;
-  background-color: #0368E3;
-  border-radius: 10px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1050,10 +1049,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .sol-icon-box img {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
 }
 
 .sol-card-title {
