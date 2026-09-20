@@ -1688,12 +1688,17 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   margin-top: 4px;
 }
 
+.form-checkbox-row + .form-checkbox-row {
+  margin-top: 10px;
+}
+
 .checkbox-label {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
+  line-height: 1.45;
   color: #374151;
   cursor: pointer;
   user-select: none;
@@ -1703,8 +1708,22 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  accent-color: #0048A0;
+  accent-color: #1C479C;
   cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.privacy-link {
+  color: #1C479C;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.privacy-link:hover {
+  color: #143675;
 }
 
 .form-action-row {
@@ -1841,6 +1860,330 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   font-weight: 700;
   color: #0F172A;
 }
+
+/* ==========================================================================
+   PRIVACY POLICY PAGE STYLES
+   ========================================================================== */
+
+.privacy-page-wrap {
+  background-color: #F5F5F4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Hero Section */
+.privacy-hero-section {
+  background-color: #F5F5F4;
+  padding-top: 132px;
+  padding-bottom: 40px;
+}
+
+.privacy-hero-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.privacy-hero-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1C479C;
+  background-color: #EFF6FF;
+  padding: 4px 12px;
+  border-radius: 100px;
+  width: fit-content;
+  margin-bottom: 16px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.privacy-hero-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 50px;
+  font-weight: 700 !important;
+  line-height: 1.1;
+  letter-spacing: -0.03em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 16px 0;
+}
+
+.privacy-hero-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0 0 24px 0;
+  max-width: 800px;
+}
+
+.privacy-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #64748B;
+}
+
+.privacy-meta-item strong {
+  color: #0F172A;
+  font-weight: 600;
+}
+
+.privacy-meta-separator {
+  color: #CBD5E1;
+}
+
+/* 2. Main Content Card */
+.privacy-content-section {
+  background-color: #F5F5F4;
+  padding-bottom: 110px;
+}
+
+.privacy-content-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.privacy-card {
+  background: #FFFFFF;
+  border-radius: 4px;
+  padding: 48px 56px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+/* Highlight Box */
+.privacy-highlight-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-left: 4px solid #1C479C;
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 44px;
+}
+
+.privacy-highlight-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #EFF6FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1C479C;
+}
+
+.privacy-highlight-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 18px;
+  font-weight: 700 !important;
+  color: #0F172A;
+  margin: 0 0 6px 0;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+}
+
+.privacy-highlight-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #475569;
+  margin: 0;
+}
+
+/* Privacy Body & Sections */
+.privacy-body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.privacy-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.privacy-section-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 24px;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.privacy-subheading {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 18px;
+  font-weight: 700 !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #0F172A;
+  margin: 20px 0 10px 0;
+}
+
+.privacy-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #374151;
+  margin: 0 0 16px 0;
+}
+
+.privacy-text:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-list {
+  margin: 0 0 16px 0;
+  padding-left: 22px;
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.privacy-info-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  background-color: #F8FAFC;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.privacy-info-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  padding: 14px 20px;
+  border-bottom: 1px solid #E2E8F0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+}
+
+.privacy-info-row:last-child {
+  border-bottom: none;
+}
+
+.privacy-info-label {
+  font-weight: 600;
+  color: #475569;
+}
+
+.privacy-info-value {
+  color: #0F172A;
+}
+
+/* Rights Grid */
+.privacy-rights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+
+.privacy-right-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  padding: 18px 20px;
+  box-sizing: border-box;
+}
+
+.privacy-right-name {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 16px;
+  font-weight: 700 !important;
+  color: #0F172A;
+  margin: 0 0 8px 0;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+}
+
+.privacy-right-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0;
+}
+
+.privacy-contact-prompt {
+  margin-top: 20px;
+}
+
+/* Bottom CTA in Privacy Policy */
+.privacy-footer-cta {
+  margin-top: 48px;
+  padding-top: 36px;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.privacy-cta-title {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 20px;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  font-feature-settings: 'ss02' on, 'ss03' on, 'ss04' on;
+  color: #000000;
+  margin: 0 0 6px 0;
+}
+
+.privacy-cta-desc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+}
+
+.privacy-cta-btn {
+  background-color: #1C479C;
+  color: #FFFFFF !important;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.privacy-cta-btn:hover {
+  background-color: #143675;
+  transform: translateY(-1px);
+}
+
 
 
 

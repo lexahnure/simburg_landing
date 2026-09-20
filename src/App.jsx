@@ -7,6 +7,7 @@ import ProductRspPage from './pages/ProductRspPage';
 import ProductEdocPage from './pages/ProductEdocPage';
 import ProductSimOsPage from './pages/ProductSimOsPage';
 import ProductOtaPage from './pages/ProductOtaPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 export default function App() {
   return (
@@ -16,12 +17,16 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/product-rsp" element={<ProductRspPage />} />
           <Route path="/product-edoc" element={<ProductEdocPage />} />
           <Route path="/product-sim-os" element={<ProductSimOsPage />} />
           <Route path="/product-ota" element={<ProductOtaPage />} />
 
-          {/* Backwards compatibility redirects */}
+          {/* Aliases & backwards compatibility redirects */}
+          <Route path="/privacy" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/privacy-policy.html" element={<Navigate to="/privacy-policy" replace />} />
+          <Route path="/privacy-policy.dc.html" element={<Navigate to="/privacy-policy" replace />} />
           <Route path="/index.dc.html" element={<Navigate to="/" replace />} />
           <Route path="/about.dc.html" element={<Navigate to="/about" replace />} />
           <Route path="/contact.dc.html" element={<Navigate to="/contact" replace />} />

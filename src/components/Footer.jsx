@@ -43,7 +43,7 @@ export default function Footer() {
           <div>
             <h4 className="footer-col-title">Contact &amp; Legal</h4>
             <div className="footer-col-links">
-              <Link to="#" className="footer-link">
+              <Link to="/privacy-policy" className="footer-link">
                 Privacy Policy
               </Link>
               <Link to="#" className="footer-link">

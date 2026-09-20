@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ScrollReveal from '../components/ScrollReveal';
 
 export default function ContactPage() {
@@ -9,6 +10,7 @@ export default function ContactPage() {
     companyName: '',
     message: '',
     requireNda: false,
+    agreePrivacy: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -22,7 +24,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.companyEmail) return;
+    if (!formData.companyEmail || !formData.agreePrivacy) return;
     setSubmitted(true);
   };
 
@@ -141,6 +143,25 @@ export default function ContactPage() {
                         className="form-checkbox"
                       />
                       <span>Require mutual NDA prior to technical discussions</span>
+                    </label>
+                  </div>
+
+                  <div className="form-checkbox-row">
+                    <label className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        name="agreePrivacy"
+                        checked={formData.agreePrivacy}
+                        onChange={handleChange}
+                        required
+                        className="form-checkbox"
+                      />
+                      <span>
+                        I agree to the processing of my personal data in accordance with the{' '}
+                        <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer" className="privacy-link">
+                          Privacy Policy
+                        </Link>
+                      </span>
                     </label>
                   </div>
 

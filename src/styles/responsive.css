@@ -1037,6 +1037,39 @@ img {
   .contact-submit-btn {
     width: 100% !important;
   }
+
+  /* Privacy Policy Page Mobile */
+  .privacy-hero-section {
+    padding-top: 100px !important;
+    padding-bottom: 32px !important;
+  }
+  .privacy-hero-title {
+    font-size: 34px !important;
+  }
+  .privacy-card {
+    padding: 28px 20px !important;
+  }
+  .privacy-highlight-box {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 20px 16px !important;
+  }
+  .privacy-rights-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .privacy-info-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+    padding: 12px 16px !important;
+  }
+  .privacy-footer-cta {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .privacy-cta-btn {
+    width: 100% !important;
+    text-align: center !important;
+  }
 }
 
 
