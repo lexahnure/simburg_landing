@@ -759,7 +759,7 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 .hero-text-wrap {
   max-width: 840px;
-  margin: 0 auto;
+  margin: -60px auto 0;
   pointer-events: auto;
   display: flex;
   flex-direction: column;

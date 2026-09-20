@@ -343,7 +343,7 @@ function generateGoldbergSphere(freq = 7) {
 let cachedGoldbergCells = null;
 function getGoldbergCells() {
   if (!cachedGoldbergCells) {
-    cachedGoldbergCells = generateGoldbergSphere(9);
+    cachedGoldbergCells = generateGoldbergSphere(10);
   }
   return cachedGoldbergCells;
 }
@@ -374,10 +374,9 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
     let scrollProgress = 0;
     let targetScrollProgress = 0;
 
-    let activeCellId = -1;
-    let activeIconIndex = 0;
-    let cellSwitchTimer = 0;
-    const CELL_CYCLE_DURATION = 3.2;
+    const MAX_ACTIVE_CELLS = 3;
+    let activeCells = [];
+    let spawnTimer = 0.4;
 
     let curTextTranslateY = 0;
 
@@ -391,42 +390,49 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
         // Centered stage: front-facing and close to the sphere center
         return rot[2] > 0.55 && Math.abs(rot[0]) < 0.35 && Math.abs(rot[1]) < 0.35;
       }
-      // Horizon stage: front-facing and visible in the top center arc of the horizon
-      return rot[2] > 0.48 && Math.abs(rot[0]) < 0.32 && rot[1] >= -0.78 && rot[1] <= -0.42;
+      // Horizon stage: front-facing horizontal band across front hemisphere (below hero text)
+      return rot[2] > 0.32 && Math.abs(rot[0]) < 0.65 && rot[1] >= -0.62 && rot[1] <= -0.15;
     }
 
-    function pickNextActiveCell(isCentered = false) {
-      const candidates = goldbergCells.map(cell => {
-        const rot = rotatePoint(cell.center, sphereRotY, EARTH_TILT_X);
-        return { cell, rot };
-      }).filter(item => {
-        if (item.cell.id === activeCellId) return false;
-        if (isCentered) {
-          return item.rot[2] > 0.55 && Math.abs(item.rot[0]) < 0.35 && Math.abs(item.rot[1]) < 0.35;
-        }
-        return item.rot[2] > 0.48 &&
-               Math.abs(item.rot[0]) < 0.32 &&
-               item.rot[1] >= -0.78 && item.rot[1] <= -0.42;
+    function spawnActiveCell(isCentered = false) {
+      const activeIds = new Set(activeCells.map(a => a.cellId));
+      const activeIcons = new Set(activeCells.map(a => a.iconIndex));
+
+      const candidates = goldbergCells.filter(cell => {
+        if (activeIds.has(cell.id)) return false;
+        return isCellEligible(cell, sphereRotY, isCentered);
       });
 
-      if (candidates.length > 0) {
-        // Prefer candidates closest to center (rot[0] near 0)
-        candidates.sort((a, b) => {
-          const distA = Math.hypot(a.rot[0], isCentered ? a.rot[1] : (a.rot[1] + 0.60));
-          const distB = Math.hypot(b.rot[0], isCentered ? b.rot[1] : (b.rot[1] + 0.60));
-          return distA - distB;
+      if (candidates.length === 0) return;
+
+      // Keep active cells spatially separated across the band
+      const wellSpaced = candidates.filter(cand => {
+        return activeCells.every(act => {
+          const actCell = goldbergCells[act.cellId];
+          if (!actCell) return true;
+          return vLength(vSub(cand.center, actCell.center)) > 0.28;
         });
-        const topPool = candidates.slice(0, Math.min(candidates.length, 5));
-        const pick = topPool[Math.floor(Math.random() * topPool.length)];
-        activeCellId = pick.cell.id;
-        activeIconIndex = (activeIconIndex + 1) % ICONS.length;
-        pick.cell.iconIndex = activeIconIndex;
-      } else {
-        const anyValid = goldbergCells.find(c => isCellEligible(c, sphereRotY, isCentered));
-        if (anyValid) {
-          activeCellId = anyValid.id;
-        }
-      }
+      });
+
+      const pool = wellSpaced.length > 0 ? wellSpaced : candidates;
+      const chosenCell = pool[Math.floor(Math.random() * pool.length)];
+
+      // Pick an icon not currently displayed by other active cells
+      const availableIcons = ICONS.map((_, idx) => idx).filter(idx => !activeIcons.has(idx));
+      const chosenIconIndex = availableIcons.length > 0
+        ? availableIcons[Math.floor(Math.random() * availableIcons.length)]
+        : Math.floor(Math.random() * ICONS.length);
+
+      activeCells.push({
+        cellId: chosenCell.id,
+        iconIndex: chosenIconIndex,
+        fade: 0,
+        state: 'in',
+        timer: 0,
+        maxLife: 3.6 + Math.random() * 2.0,
+        fadeInDuration: 0.5,
+        fadeOutDuration: 0.5,
+      });
     }
 
     function onScroll() {
@@ -470,7 +476,7 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
     }
 
     function drawCell(item, sphereGrad) {
-      const { projectedVerts, dotL, isActive } = item;
+      const { projectedVerts, dotL, isActive, activeFade } = item;
       if (projectedVerts.length < 3) return;
 
       ctx.beginPath();
@@ -480,14 +486,33 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       }
       ctx.closePath();
 
-      if (isActive) {
-        // Active cell with icon is #08204D with cyan accent border
+      if (isActive && activeFade > 0.01) {
+        ctx.fillStyle = sphereGrad;
+        ctx.fill();
+
+        // Active highlight fill (#08204D) and cyan border with smooth fade
+        ctx.save();
+        ctx.globalAlpha = activeFade;
         ctx.fillStyle = '#08204D';
         ctx.fill();
 
         ctx.strokeStyle = 'rgba(0, 229, 255, 0.85)';
         ctx.lineWidth = 1.8;
         ctx.stroke();
+        ctx.restore();
+
+        if (activeFade < 0.99) {
+          ctx.save();
+          ctx.globalAlpha = 1.0 - activeFade;
+          ctx.strokeStyle = 'rgba(6, 16, 38, 0.75)';
+          ctx.lineWidth = 0.9;
+          ctx.stroke();
+
+          ctx.strokeStyle = `rgba(80, 150, 255, ${0.12 * dotL})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+          ctx.restore();
+        }
       } else {
         ctx.fillStyle = sphereGrad;
         ctx.fill();
@@ -510,8 +535,10 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       }
     }
 
-    function drawSurfaceMappedActiveCell(item, sphereCenterX, sphereCenterY, sphereRadius, cameraZ, cameraFocal, curRotY, curRotX, fadeAlpha) {
+    function drawSurfaceMappedActiveCell(item, activeEntry, sphereCenterX, sphereCenterY, sphereRadius, cameraZ, cameraFocal, curRotY, curRotX) {
       const cell = item.cell;
+      const fadeAlpha = activeEntry.fade;
+      const icon = ICONS[activeEntry.iconIndex % ICONS.length];
 
       const rotN = rotatePoint(cell.center, curRotY, curRotX);
 
@@ -531,8 +558,8 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       const ScX = sphereCenterX + rotN[0] * sphereRadius * 1.002 * scaleC;
       const ScY = sphereCenterY + rotN[1] * sphereRadius * 1.002 * scaleC;
 
-      // Scaled step for 25% smaller hexagon (F=9)
-      const step = 0.028 * sphereRadius;
+      // Scaled step for 10% smaller hexagon (freq = 10)
+      const step = 0.025 * sphereRadius;
 
       // Point U: local icon +X (rotRight)
       const U_worldZ = C_worldZ + rotRight[2] * step;
@@ -556,22 +583,65 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       const e = ScX;
       const f = ScY;
 
+      // 1. Draw Vector Icon inside cell
       ctx.save();
       ctx.globalAlpha = fadeAlpha;
       ctx.transform(a, b, c, d, e, f);
 
-      const icon = ICONS[activeIconIndex];
-      // Scaled icon for 25% smaller hexagon
-      const iconScale = 0.52;
-
-      ctx.save();
+      // Scaled icon for 10% smaller hexagon
+      const iconScale = 0.46;
       ctx.scale(iconScale, iconScale);
 
-      const pulse = 1.0 + Math.sin(Date.now() * 0.003) * 0.02;
+      const pulse = 1.0 + Math.sin(Date.now() * 0.003 + cell.id) * 0.02;
       ctx.scale(pulse, pulse);
 
       icon.draw(ctx, '#ffffff');
       ctx.restore();
+
+      // 2. Draw "online" badge with green dot near the icon
+      ctx.save();
+      ctx.globalAlpha = fadeAlpha;
+
+      const badgeW = 46;
+      const badgeH = 16;
+      const badgeR = 8;
+
+      let badgeX = ScX + 15;
+      let badgeY = ScY - 8;
+      // Flip to the left if too close to right edge of viewport
+      if (ScX > padX + vW - 70) {
+        badgeX = ScX - badgeW - 15;
+      }
+
+      // Badge pill background
+      ctx.beginPath();
+      drawRoundRect(ctx, badgeX, badgeY, badgeW, badgeH, badgeR);
+      ctx.fillStyle = 'rgba(4, 18, 38, 0.90)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.40)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Glowing green dot
+      const dotX = badgeX + 7.5;
+      const dotY = badgeY + badgeH / 2;
+      const dotPulse = 2.2 + Math.sin(Date.now() * 0.006 + cell.id) * 0.35;
+
+      ctx.save();
+      ctx.shadowColor = '#22C55E';
+      ctx.shadowBlur = 5;
+      ctx.fillStyle = '#22C55E';
+      ctx.beginPath();
+      ctx.arc(dotX, dotY, dotPulse, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // "online" text
+      ctx.fillStyle = '#F8FAFC';
+      ctx.font = '600 9px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('online', dotX + 5.5, dotY + 0.5);
 
       ctx.restore();
     }
@@ -656,6 +726,13 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       const lightDir = vNorm([0.28, -0.65, 0.72]);
       const renderList = [];
 
+      const activeMap = new Map();
+      for (const a of activeCells) {
+        if (a.fade > 0.01) {
+          activeMap.set(a.cellId, a);
+        }
+      }
+
       for (const cell of goldbergCells) {
         const rotCenter = rotatePoint(cell.center, curRotY, curRotX);
         if (rotCenter[2] < -0.12) continue;
@@ -681,7 +758,9 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
         }
 
         const dotL = Math.max(0.12, vDot(rotCenter, lightDir));
-        const isActive = (cell.id === activeCellId);
+        const activeEntry = activeMap.get(cell.id);
+        const isActive = Boolean(activeEntry);
+        const activeFade = activeEntry ? activeEntry.fade : 0;
 
         renderList.push({
           cell,
@@ -691,7 +770,9 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
           rotCenter,
           projectedVerts,
           dotL,
-          isActive
+          isActive,
+          activeFade,
+          activeEntry
         });
       }
 
@@ -707,12 +788,13 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
         drawCell(item, sphereGrad);
       }
 
-      const activeItem = renderList.find(i => i.isActive);
-      if (activeItem) {
-        drawSurfaceMappedActiveCell(
-          activeItem, sphereCenterX, sphereCenterY, sphereRadius,
-          cameraZ, cameraFocal, curRotY, curRotX, 1.0
-        );
+      for (const item of renderList) {
+        if (item.isActive && item.activeFade > 0.01 && item.activeEntry) {
+          drawSurfaceMappedActiveCell(
+            item, item.activeEntry, sphereCenterX, sphereCenterY, sphereRadius,
+            cameraZ, cameraFocal, curRotY, curRotX
+          );
+        }
       }
     }
 
@@ -751,17 +833,50 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
       sphereRotY += EARTH_ROT_SPEED * dt;
 
       const isCentered = scrollProgress > 0.25;
-      const curActive = goldbergCells[activeCellId];
-      if (!isCellEligible(curActive, sphereRotY, isCentered)) {
-        pickNextActiveCell(isCentered);
-        cellSwitchTimer = 0;
-      } else {
-        cellSwitchTimer += dt;
-        if (cellSwitchTimer >= CELL_CYCLE_DURATION) {
-          cellSwitchTimer = 0;
-          pickNextActiveCell(isCentered);
+
+      // Spawn new active cells when near top (before heavy blur in Stage 2)
+      if (scrollProgress < 0.20) {
+        spawnTimer -= dt;
+        if (spawnTimer <= 0 && activeCells.length < MAX_ACTIVE_CELLS) {
+          spawnActiveCell(isCentered);
+          spawnTimer = 1.0 + Math.random() * 0.8;
         }
       }
+
+      // Update existing active cells
+      for (const item of activeCells) {
+        const cell = goldbergCells[item.cellId];
+        // If scrolled into blur stage or cell rotated out of eligibility, transition to fade out
+        if (scrollProgress >= 0.20 || !isCellEligible(cell, sphereRotY, isCentered)) {
+          if (item.state !== 'out') {
+            item.state = 'out';
+            item.timer = 0;
+          }
+        }
+
+        if (item.state === 'in') {
+          item.timer += dt;
+          item.fade = Math.min(1.0, item.timer / item.fadeInDuration);
+          if (item.timer >= item.fadeInDuration) {
+            item.state = 'active';
+            item.timer = 0;
+            item.fade = 1.0;
+          }
+        } else if (item.state === 'active') {
+          item.timer += dt;
+          item.fade = 1.0;
+          if (item.timer >= item.maxLife) {
+            item.state = 'out';
+            item.timer = 0;
+          }
+        } else if (item.state === 'out') {
+          item.timer += dt;
+          item.fade = Math.max(0.0, 1.0 - (item.timer / item.fadeOutDuration));
+        }
+      }
+
+      // Filter out completed active cells
+      activeCells = activeCells.filter(item => item.fade > 0.001 || item.state !== 'out');
 
       ctx.save();
       ctx.scale(dpr, dpr);
@@ -774,7 +889,8 @@ export default function CanvasHoneycomb({ trackRef, textRef, btnRef, standardsRe
     handleResize();
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', onScroll, { passive: true });
-    pickNextActiveCell(false);
+    spawnActiveCell(false);
+    spawnTimer = 0.8;
 
     rafId = requestAnimationFrame(renderLoop);
 
