@@ -3,7 +3,7 @@ import ProductTemplate from '../components/ProductTemplate';
 
 function GovApplicationsDiagram() {
   return (
-    <div className="product-visual-card card-white">
+    <div className="product-visual-card">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 440, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
           <div className="diag-node" style={{ padding: '10px 8px' }}>
@@ -36,7 +36,7 @@ function GovApplicationsDiagram() {
 
 function SecurityDataDiagram() {
   return (
-    <div className="product-visual-card">
+    <div className="product-visual-card card-white">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%', maxWidth: 440, margin: '0 auto' }}>
         <div className="diag-matrix-header">Logical Data Structure (LDS) Groups</div>
         <div className="diag-matrix-pills-row">
@@ -56,7 +56,7 @@ function SecurityDataDiagram() {
 
 function LifecyclePipelineDiagram() {
   return (
-    <div className="product-visual-card card-white">
+    <div className="product-visual-card">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, width: '100%', maxWidth: 440, margin: '0 auto' }}>
         <div className="diag-node" style={{ textAlign: 'center', padding: '14px 10px' }}>
           <div className="diag-node-title">1. Pre-Perso</div>
@@ -81,7 +81,7 @@ function LifecyclePipelineDiagram() {
 
 function NationalSchemesDiagram() {
   return (
-    <div className="product-visual-card">
+    <div className="product-visual-card card-white">
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 440, margin: '0 auto' }}>
         <div className="diag-node active-blue" style={{ textAlign: 'left', padding: '16px 20px' }}>
           <div className="diag-node-title">National Scheme Integrators</div>
