@@ -11,6 +11,7 @@ export default function ProductCtaSection({
     companyEmail: '',
     companyName: '',
     message: '',
+    phone_confirm: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -21,6 +22,10 @@ export default function ProductCtaSection({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.phone_confirm) {
+      setSubmitted(true);
+      return;
+    }
     if (!formData.companyEmail) return;
     setSubmitted(true);
   };
@@ -74,6 +79,15 @@ export default function ProductCtaSection({
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
+              <input
+                type="hidden"
+                name="phone_confirm"
+                value={formData.phone_confirm}
+                onChange={handleChange}
+                style={{ display: 'none' }}
+                tabIndex={-1}
+                autoComplete="off"
+              />
               <div className="form-row-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 16 }}>
                 <div>
                   <label style={{ display: 'block', fontSize: 13.5, fontWeight: 600, color: '#14161A', marginBottom: 8 }}>

@@ -11,6 +11,7 @@ export default function ContactPage() {
     message: '',
     requireNda: false,
     agreePrivacy: false,
+    phone_confirm: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,6 +54,12 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setServerError('');
+
+    // Honeypot spam trap check
+    if (formData.phone_confirm) {
+      setSubmitted(true);
+      return;
+    }
 
     if (!formData.agreePrivacy) {
       return;
@@ -140,6 +147,15 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="contact-form">
+                  <input
+                    type="hidden"
+                    name="phone_confirm"
+                    value={formData.phone_confirm}
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
                   {serverError && (
                     <div className="form-server-error" role="alert">
                       {serverError}
