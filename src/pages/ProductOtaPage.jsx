@@ -80,7 +80,6 @@ export default function ProductOtaPage() {
   const otaData = {
     icon: '/uploads/OTAPLATFORM.svg',
     title: 'OTA Platform',
-    badgeStatus: 'Coming soon',
     description: 'Over-the-air card management at campaign scale — remote SIM and eSIM management for telecom and IoT use cases.',
     features: [
       {

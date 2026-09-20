@@ -92,34 +92,24 @@ export default function Header() {
 
               <Link
                 to="/product-sim-os"
-                className={`dropdown-item dropdown-item-split ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
+                className={`dropdown-item ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
               >
-                <span className="dropdown-item-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <rect x="6" y="6" width="12" height="12" rx="2" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" />
-                    <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.4" />
-                  </svg>
-                  SIM/eSIM OS
-                </span>
-                <span className="dropdown-item-badge">
-                  Coming Soon
-                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <rect x="6" y="6" width="12" height="12" rx="2" stroke="#1C479C" strokeWidth="1.6" />
+                  <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="#1C479C" strokeWidth="1.4" />
+                </svg>
+                SIM/eSIM OS
               </Link>
 
               <Link
                 to="/product-ota"
-                className={`dropdown-item dropdown-item-split ${location.pathname === '/product-ota' ? 'active' : ''}`}
+                className={`dropdown-item ${location.pathname === '/product-ota' ? 'active' : ''}`}
               >
-                <span className="dropdown-item-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="16" r="1.4" fill={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} />
-                    <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" strokeLinecap="round" />
-                  </svg>
-                  OTA Platform
-                </span>
-                <span className="dropdown-item-badge">
-                  Coming Soon
-                </span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="16" r="1.4" fill="#1C479C" />
+                  <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke="#1C479C" strokeWidth="1.6" strokeLinecap="round" />
+                </svg>
+                OTA Platform
               </Link>
             </div>
           </div>
@@ -181,28 +171,22 @@ export default function Header() {
               to="/product-sim-os"
               className={`mobile-drawer-link ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
             >
-              <span className="dropdown-item-left">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="6" y="6" width="12" height="12" rx="2" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" />
-                  <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke={location.pathname === '/product-sim-os' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.4" />
-                </svg>
-                <span>SIM/eSIM OS</span>
-              </span>
-              <span className="mobile-drawer-badge">Soon</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="6" width="12" height="12" rx="2" stroke="#1C479C" strokeWidth="1.6" />
+                <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="#1C479C" strokeWidth="1.4" />
+              </svg>
+              <span>SIM/eSIM OS</span>
             </Link>
 
             <Link
               to="/product-ota"
               className={`mobile-drawer-link ${location.pathname === '/product-ota' ? 'active' : ''}`}
             >
-              <span className="dropdown-item-left">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="16" r="1.4" fill={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} />
-                  <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke={location.pathname === '/product-ota' ? '#1C479C' : '#B0B4BC'} strokeWidth="1.6" strokeLinecap="round" />
-                </svg>
-                <span>OTA Platform</span>
-              </span>
-              <span className="mobile-drawer-badge">Soon</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="16" r="1.4" fill="#1C479C" />
+                <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke="#1C479C" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+              <span>OTA Platform</span>
             </Link>
           </div>
 

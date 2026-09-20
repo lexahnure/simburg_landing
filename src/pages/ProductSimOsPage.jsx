@@ -86,7 +86,6 @@ export default function ProductSimOsPage() {
       },
       {
         title: 'Seamless eUICC Extension',
-        badgeStatus: 'Coming soon',
         description: 'The same proven codebase directly extends into the eSIM domain. Built on an ISD-R/ECASD architecture, it supports GSMA SGP.22-interoperable profile packages, enabling smooth rollouts for both consumer and IoT deployments.',
         badges: ['GSMA SGP.22', 'ISD-R', 'ECASD'],
         visual: <EuiccDomainDiagram />,
