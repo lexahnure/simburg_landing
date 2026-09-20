@@ -328,7 +328,6 @@ button, input, select, textarea {
 .product-visual-card.card-white {
   background: #FFFFFF;
   border: 1px solid #F1F5F9;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
 }
 
 /* Diagram 1: Flow / Architecture */
@@ -580,7 +579,7 @@ button, input, select, textarea {
   max-width: 1240px;
   margin: 0 auto;
   background: #DCEBFF;
-  border-radius: 20px;
+  border-radius: .5rem;
   padding: 64px 32px;
   text-align: center;
   display: flex;
@@ -2310,7 +2309,6 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   background: #FFFFFF;
   border-radius: 4px;
   padding: 40px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 40px;

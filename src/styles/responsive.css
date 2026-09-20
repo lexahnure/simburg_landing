@@ -827,7 +827,7 @@ img {
   }
   .product-cta-card {
     padding: 40px 20px !important;
-    border-radius: 16px !important;
+    border-radius: .5rem !important;
   }
   .product-feature-row {
     padding: 44px 20px !important;
