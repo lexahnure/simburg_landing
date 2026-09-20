@@ -1415,6 +1415,10 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .statement-text {
+  max-width: 920px;
+  margin-right: auto;
+  margin-left: 0;
+  text-align: left;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: clamp(24px, 2.5vw, 36px);
   font-weight: 500;
