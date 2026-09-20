@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpenText, ScanSearch, FlaskConical, Rocket } from 'lucide-react';
 import CanvasHoneycomb from '../components/CanvasHoneycomb';
 import ScrollReveal from '../components/ScrollReveal';
 import ScrollWordReveal from '../components/ScrollWordReveal';
@@ -642,10 +641,8 @@ export default function HomePage() {
           <ScrollReveal delay={60}>
             <div className="engagement-list">
               {/* Row 1: Documentation */}
-              <div className="engagement-item">
-                <div className="engagement-icon-wrap">
-                  <BookOpenText size={28} strokeWidth={1.8} />
-                </div>
+              <div className="engagement-item active">
+                <span className="engagement-number">1.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Documentation</h3>
                   <p className="engagement-item-desc">
@@ -656,9 +653,7 @@ export default function HomePage() {
 
               {/* Row 2: Architecture review */}
               <div className="engagement-item">
-                <div className="engagement-icon-wrap">
-                  <ScanSearch size={28} strokeWidth={1.8} />
-                </div>
+                <span className="engagement-number">2.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Architecture review</h3>
                   <p className="engagement-item-desc">
@@ -669,9 +664,7 @@ export default function HomePage() {
 
               {/* Row 3: Pilot */}
               <div className="engagement-item">
-                <div className="engagement-icon-wrap">
-                  <FlaskConical size={28} strokeWidth={1.8} />
-                </div>
+                <span className="engagement-number">3.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Pilot</h3>
                   <p className="engagement-item-desc">
@@ -682,9 +675,7 @@ export default function HomePage() {
 
               {/* Row 4: Production */}
               <div className="engagement-item">
-                <div className="engagement-icon-wrap">
-                  <Rocket size={28} strokeWidth={1.8} />
-                </div>
+                <span className="engagement-number">4.</span>
                 <div className="engagement-text">
                   <h3 className="engagement-item-title">Production</h3>
                   <p className="engagement-item-desc">

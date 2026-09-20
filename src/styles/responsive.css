@@ -1043,7 +1043,7 @@ img {
   }
   .get-touch-card {
     padding: 44px 20px !important;
-    border-radius: 20px !important;
+    border-radius: 0.5rem !important;
   }
   .footer-grid-3col {
     grid-template-columns: 1fr !important;
