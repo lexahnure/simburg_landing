@@ -79,18 +79,6 @@ export default function Header() {
               </Link>
 
               <Link
-                to="/product-edoc"
-                className={`dropdown-item ${location.pathname === '/product-edoc' ? 'active' : ''}`}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="#1C479C" strokeWidth="1.6" />
-                  <circle cx="8" cy="12" r="2" stroke="#1C479C" strokeWidth="1.4" />
-                  <path d="M13 10h6M13 13h6" stroke="#1C479C" strokeWidth="1.4" strokeLinecap="round" />
-                </svg>
-                Electronic Documents
-              </Link>
-
-              <Link
                 to="/product-sim-os"
                 className={`dropdown-item ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
               >
@@ -110,6 +98,18 @@ export default function Header() {
                   <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke="#1C479C" strokeWidth="1.6" strokeLinecap="round" />
                 </svg>
                 OTA Platform
+              </Link>
+
+              <Link
+                to="/product-edoc"
+                className={`dropdown-item ${location.pathname === '/product-edoc' ? 'active' : ''}`}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="#1C479C" strokeWidth="1.6" />
+                  <circle cx="8" cy="12" r="2" stroke="#1C479C" strokeWidth="1.4" />
+                  <path d="M13 10h6M13 13h6" stroke="#1C479C" strokeWidth="1.4" strokeLinecap="round" />
+                </svg>
+                Electronic Documents
               </Link>
             </div>
           </div>
@@ -156,18 +156,6 @@ export default function Header() {
             </Link>
 
             <Link
-              to="/product-edoc"
-              className={`mobile-drawer-link ${location.pathname === '/product-edoc' ? 'active' : ''}`}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="5" width="18" height="14" rx="2" stroke="#1C479C" strokeWidth="1.6" />
-                <circle cx="8" cy="12" r="2" stroke="#1C479C" strokeWidth="1.4" />
-                <path d="M13 10h6M13 13h6" stroke="#1C479C" strokeWidth="1.4" strokeLinecap="round" />
-              </svg>
-              <span>Electronic Documents</span>
-            </Link>
-
-            <Link
               to="/product-sim-os"
               className={`mobile-drawer-link ${location.pathname === '/product-sim-os' ? 'active' : ''}`}
             >
@@ -187,6 +175,18 @@ export default function Header() {
                 <path d="M8.5 12.5a5 5 0 0 1 7 0M5.5 9.5a9 9 0 0 1 13 0" stroke="#1C479C" strokeWidth="1.6" strokeLinecap="round" />
               </svg>
               <span>OTA Platform</span>
+            </Link>
+
+            <Link
+              to="/product-edoc"
+              className={`mobile-drawer-link ${location.pathname === '/product-edoc' ? 'active' : ''}`}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="#1C479C" strokeWidth="1.6" />
+                <circle cx="8" cy="12" r="2" stroke="#1C479C" strokeWidth="1.4" />
+                <path d="M13 10h6M13 13h6" stroke="#1C479C" strokeWidth="1.4" strokeLinecap="round" />
+              </svg>
+              <span>Electronic Documents</span>
             </Link>
           </div>
 
