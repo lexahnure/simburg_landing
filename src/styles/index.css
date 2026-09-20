@@ -923,23 +923,18 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 .engagement-list {
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 4px;
-  overflow: hidden;
+  background: transparent;
+  border: none;
 }
 
 .engagement-item {
   display: flex;
   align-items: flex-start;
   gap: 24px;
-  padding: 28px 32px;
-  border-bottom: 1px solid #F1F5F9;
+  padding: 24px 32px;
+  border: none;
+  border-radius: 8px;
   transition: background-color 0.2s ease;
-}
-
-.engagement-item:last-child {
-  border-bottom: none;
 }
 
 .engagement-item:hover,

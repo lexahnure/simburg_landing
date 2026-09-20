@@ -455,7 +455,7 @@ export default function HomePage() {
           <ScrollReveal delay={60}>
             <div className="engagement-list">
               {/* Row 1: Documentation */}
-              <div className="engagement-item active">
+              <div className="engagement-item">
                 <div className="engagement-icon-wrap">
                   <BookOpenText size={28} strokeWidth={1.8} />
                 </div>
