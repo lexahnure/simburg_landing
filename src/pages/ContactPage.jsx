@@ -11,7 +11,7 @@ export default function ContactPage() {
     message: '',
     requireNda: false,
     agreePrivacy: false,
-    phone_confirm: '',
+    botcheck: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,7 +56,7 @@ export default function ContactPage() {
     setServerError('');
 
     // Honeypot spam trap check
-    if (formData.phone_confirm) {
+    if (formData.botcheck) {
       setSubmitted(true);
       return;
     }
@@ -149,8 +149,8 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="contact-form">
                   <input
                     type="hidden"
-                    name="phone_confirm"
-                    value={formData.phone_confirm}
+                    name="botcheck"
+                    value={formData.botcheck}
                     onChange={handleChange}
                     style={{ display: 'none' }}
                     tabIndex={-1}

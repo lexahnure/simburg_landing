@@ -11,7 +11,7 @@ export default function ProductCtaSection({
     companyEmail: '',
     companyName: '',
     message: '',
-    phone_confirm: '',
+    botcheck: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -22,7 +22,7 @@ export default function ProductCtaSection({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.phone_confirm) {
+    if (formData.botcheck) {
       setSubmitted(true);
       return;
     }
@@ -81,8 +81,8 @@ export default function ProductCtaSection({
             <form onSubmit={handleSubmit}>
               <input
                 type="hidden"
-                name="phone_confirm"
-                value={formData.phone_confirm}
+                name="botcheck"
+                value={formData.botcheck}
                 onChange={handleChange}
                 style={{ display: 'none' }}
                 tabIndex={-1}
