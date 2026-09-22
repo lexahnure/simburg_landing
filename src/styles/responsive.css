@@ -1143,7 +1143,13 @@ img {
     gap: 16px !important;
   }
   .form-action-row {
-    justify-content: stretch !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+  .form-captcha-wrap {
+    display: flex !important;
+    justify-content: center !important;
   }
   .contact-submit-btn {
     width: 100% !important;

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import ScrollReveal from '../components/ScrollReveal';
 
 export default function ContactPage() {
@@ -13,10 +14,19 @@ export default function ContactPage() {
     agreePrivacy: false,
     botcheck: '',
   });
+  const [hcaptchaToken, setHcaptchaToken] = useState('');
+  const captchaRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [serverError, setServerError] = useState('');
+
+  const onHCaptchaChange = (token) => {
+    setHcaptchaToken(token);
+    if (serverError) {
+      setServerError('');
+    }
+  };
 
   const validateEmail = (email) => {
     if (!email || !email.trim()) {
@@ -71,6 +81,11 @@ export default function ContactPage() {
       return;
     }
 
+    if (!hcaptchaToken) {
+      setServerError('Please complete the captcha verification.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -87,6 +102,7 @@ export default function ContactPage() {
       // Send NDA checkbox value
       submissionData.append("require_nda", formData.requireNda ? "Yes" : "No");
       // Note: agreePrivacy is intentionally NOT appended as requested
+      submissionData.append("h-captcha-response", hcaptchaToken);
       submissionData.append("subject", `New Consultation Request: ${formData.firstName.trim()} ${formData.lastName.trim()} (${formData.companyName.trim()})`);
 
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -99,6 +115,8 @@ export default function ContactPage() {
       if (response.ok && data.success) {
         setSubmitted(true);
       } else {
+        captchaRef.current?.resetCaptcha();
+        setHcaptchaToken('');
         setServerError(data.message || 'Submission failed. Please check your inputs and try again.');
       }
     } catch (err) {
@@ -269,6 +287,15 @@ export default function ContactPage() {
                   </div>
 
                   <div className="form-action-row">
+                    <div className="form-captcha-wrap">
+                      <HCaptcha
+                        ref={captchaRef}
+                        sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                        reCaptchaCompat={false}
+                        onVerify={onHCaptchaChange}
+                        onExpire={() => setHcaptchaToken('')}
+                      />
+                    </div>
                     <button
                       type="submit"
                       disabled={!formData.agreePrivacy || isSubmitting}

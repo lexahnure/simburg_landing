@@ -2336,13 +2336,13 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .form-grid-2col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 16px;
 }
 
 .form-group {
@@ -2402,11 +2402,11 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .form-checkbox-row {
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .form-checkbox-row + .form-checkbox-row {
-  margin-top: 10px;
+  margin-top: 0;
 }
 
 .checkbox-label {
@@ -2475,8 +2475,17 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 
 .form-action-row {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.form-captcha-wrap {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .contact-submit-btn {

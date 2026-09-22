@@ -331,7 +331,7 @@ export default function HomePage() {
             <div className="partners-logos-col">
               <div className="partner-logo-item">
                 <a
-                  href="https://www.samsung.com"
+                  href="https://semiconductor.samsung.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="partner-logo-link"
@@ -353,6 +353,20 @@ export default function HomePage() {
                   <img
                     src="/uploads/infineon.svg"
                     alt="Infineon"
+                    className="partner-logo-img"
+                  />
+                </a>
+              </div>
+              <div className="partner-logo-item">
+                <a
+                  href="https://elitnet.eu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="partner-logo-link"
+                >
+                  <img
+                    src="/uploads/elitnet.png"
+                    alt="Elit Net"
                     className="partner-logo-img"
                   />
                 </a>
@@ -383,7 +397,7 @@ export default function HomePage() {
               </div>
               <div className="partner-logo-item">
                 <a
-                  href="https://vadessmartcard.com"
+                  href="https://vadesgroup.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="partner-logo-link"
