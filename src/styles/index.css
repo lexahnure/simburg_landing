@@ -1095,9 +1095,9 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
-.sol-card:hover .sol-arrow-btn {
-  background-color: #0368E3;
-  border-color: #0368E3;
+.sol-card:hover span.sol-arrow-btn {
+  background: rgb(28, 71, 156);
+  border-color: rgb(28, 71, 156);
   color: #FFFFFF;
   transform: translateX(2px);
 }
