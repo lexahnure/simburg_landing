@@ -367,7 +367,7 @@ export default function HomePage() {
                   <img
                     src="/uploads/elitnet.png"
                     alt="Elit Net"
-                    className="partner-logo-img"
+                    className="partner-logo-img elit-net"
                   />
                 </a>
               </div>

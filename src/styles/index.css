@@ -845,11 +845,17 @@ h1, h2, h3, h4, h5, h6, .hero-title, .page-hero-title, .products-section-title, 
 }
 
 .partner-logo-img {
-  height: 28px;
+  height: 48px;
   width: auto;
   display: block;
   opacity: 0.85;
   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.partner-logo-img.elit-net,
+.partner-logo-img.elit-net-logo,
+.partner-logo-img[src*="elitnet"] {
+  max-height: 20px;
 }
 
 .partner-logo-img:hover {
